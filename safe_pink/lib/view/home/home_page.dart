@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe_pink/view/home/info/info_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -22,6 +23,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 239, 7, 96),
+
+      //APP BAR
       appBar: AppBar(
         toolbarHeight: size.height * .1,
         backgroundColor: const Color.fromARGB(255, 239, 7, 96),
@@ -49,7 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 239, 7, 96),
           image: DecorationImage(
             image: AssetImage("assets/alert_red.png"),
           ),
@@ -61,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                //ALERTA
                 Container(
                   width: size.width * .35,
                   height: size.width * .35,
@@ -79,6 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
+
+                //LOCAL
                 Container(
                   width: size.width * .35,
                   height: size.width * .35,
@@ -102,6 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                //FRIENDS
                 Container(
                   width: size.width * .35,
                   height: size.width * .35,
@@ -120,26 +127,38 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
-                Container(
-                  width: size.width * .35,
-                  height: size.width * .35,
-                  decoration: bordas,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: size.width * .06),
-                        child: const Image(
-                            image: AssetImage("assets/info.png"),
-                            fit: BoxFit.cover),
-                      ),
-                      Text("Informações", style: styleText)
-                    ],
+
+                //INFO
+                GestureDetector(
+                  child: Container(
+                    width: size.width * .35,
+                    height: size.width * .35,
+                    decoration: bordas,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.width * .06),
+                          child: const Image(
+                              image: AssetImage("assets/info.png"),
+                              fit: BoxFit.cover),
+                        ),
+                        Text("Informações", style: styleText)
+                      ],
+                    ),
+                  ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const InfoPage(),
+                    ),
                   ),
                 ),
               ],
             ),
+
+            //PERFIL
             Container(
               width: size.width * .35,
               height: size.width * .35,
