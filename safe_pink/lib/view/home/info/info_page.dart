@@ -9,7 +9,7 @@ class InfoPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 239, 7, 96),
+      backgroundColor: const Color.fromARGB(255, 239, 7, 96),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: size.height * .1,
@@ -102,7 +102,7 @@ class InfoPage extends StatelessWidget {
             ),
             onTap: () => Call().ligar('190'),
           ),
-          Text("Policia minitar")
+          const Text("Policia militar")
         ]),
       ),
     );

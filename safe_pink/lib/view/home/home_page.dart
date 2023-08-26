@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe_pink/view/home/alert/alert_pop_up.dart';
 import 'package:safe_pink/view/home/info/info_page.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 239, 7, 96),
+      backgroundColor: const Color.fromARGB(255, 239, 7, 96),
 
       //APP BAR
       appBar: AppBar(
@@ -51,6 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+
+      //BODY
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -65,23 +68,28 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 //ALERTA
-                Container(
-                  width: size.width * .35,
-                  height: size.width * .35,
-                  decoration: bordas,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: size.width * .06),
-                        child: const Image(
-                            image: AssetImage("assets/alert_white.png"),
-                            fit: BoxFit.cover),
-                      ),
-                      Text("Alerta", style: styleText)
-                    ],
+                GestureDetector(
+                  child: Container(
+                    width: size.width * .35,
+                    height: size.width * .35,
+                    decoration: bordas,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.width * .06),
+                          child: const Image(
+                              image: AssetImage("assets/alert_white.png"),
+                              fit: BoxFit.cover),
+                        ),
+                        Text("Alerta", style: styleText)
+                      ],
+                    ),
                   ),
+                  onTap: () {
+                    AlertPopUp().show(context);
+                  },
                 ),
 
                 //LOCAL
