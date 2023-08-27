@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../../components/style_form_field.dart';
+import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -90,11 +90,17 @@ class _LoginPageState extends State<LoginPage> {
                   Center(
                     child: Row(
                       children: [
-                        const Text('Já possui uma conta?'),
+                        const Text('Não possui uma conta?'),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () => Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterPage(),
+                            ),
+                            (Route<dynamic> route) => false,
+                          ),
                           child: const Text(
-                            'Entrar',
+                            'Register',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

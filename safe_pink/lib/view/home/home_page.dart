@@ -3,6 +3,8 @@ import 'package:safe_pink/view/home/alert/alert_pop_up.dart';
 import 'package:safe_pink/view/home/info/info_page.dart';
 import 'package:safe_pink/view/login/login_page.dart';
 
+import '../../components/components_style.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -11,15 +13,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final styleText = const TextStyle(
-    color: Color.fromARGB(255, 239, 7, 96),
-    fontWeight: FontWeight.bold,
-    fontSize: 20,
-  );
-  final bordas = BoxDecoration(
-    borderRadius: BorderRadius.circular(15),
-    color: Colors.white,
-  );
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Container(
                     width: size.width * .35,
                     height: size.width * .35,
-                    decoration: bordas,
+                    decoration: ComponentsStyle.bordas,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -84,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               image: AssetImage("assets/alert_white.png"),
                               fit: BoxFit.cover),
                         ),
-                        Text("Alerta", style: styleText)
+                        const Text("Alerta", style: ComponentsStyle.text)
                       ],
                     ),
                   ),
@@ -97,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Container(
                   width: size.width * .35,
                   height: size.width * .35,
-                  decoration: bordas,
+                  decoration: ComponentsStyle.bordas,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -108,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             image: AssetImage("assets/local.png"),
                             fit: BoxFit.cover),
                       ),
-                      Text("Localização", style: styleText)
+                      Text("Localização", style: ComponentsStyle.text)
                     ],
                   ),
                 ),
@@ -121,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Container(
                   width: size.width * .35,
                   height: size.width * .35,
-                  decoration: bordas,
+                  decoration: ComponentsStyle.bordas,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -132,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             image: AssetImage("assets/friends.png"),
                             fit: BoxFit.cover),
                       ),
-                      Text("Amigos", style: styleText)
+                      Text("Amigos", style: ComponentsStyle.text)
                     ],
                   ),
                 ),
@@ -142,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Container(
                     width: size.width * .35,
                     height: size.width * .35,
-                    decoration: bordas,
+                    decoration: ComponentsStyle.bordas,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -153,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               image: AssetImage("assets/info.png"),
                               fit: BoxFit.cover),
                         ),
-                        Text("Informações", style: styleText)
+                        Text("Informações", style: ComponentsStyle.text)
                       ],
                     ),
                   ),
@@ -172,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(
                 width: size.width * .35,
                 height: size.width * .35,
-                decoration: bordas,
+                decoration: ComponentsStyle.bordas,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -183,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           image: AssetImage("assets/user.png"),
                           fit: BoxFit.cover),
                     ),
-                    Text("Perfil", style: styleText)
+                    Text("Perfil", style: ComponentsStyle.text)
                   ],
                 ),
               ),
