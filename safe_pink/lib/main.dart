@@ -15,6 +15,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       home: const MyHomePage(),
       theme: ThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: Color.fromARGB(255, 239, 7, 96)),
         textTheme: const TextTheme(
           bodyText1: TextStyle(
             color: Colors.white,
