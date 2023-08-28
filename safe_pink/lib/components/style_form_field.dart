@@ -15,21 +15,24 @@ class TextFormFieldComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      //keyboardType: TextInputType.emailAddress,
+      //obscureText: true,
       decoration: InputDecoration(
-      filled: true,
-      fillColor: Colors.white,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(25),
+        errorStyle: const TextStyle(color: Colors.white),
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25),
+          borderSide: BorderSide.none,
+        ),
+        labelText: label,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(25),
-        borderSide: BorderSide.none,
-      ),
-      labelText: label,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-    ),
-    controller: controller,
-    validator: validator,
+      controller: controller,
+      validator: validator,
     );
   }
 }

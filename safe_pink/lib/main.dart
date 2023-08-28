@@ -1,6 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:safe_pink/services/auth_service.dart';
+import 'package:safe_pink/view/login/auth_widget.dart';
+
 import 'firebase_options.dart';
 import 'view/home/home_page.dart';
 
@@ -10,7 +14,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => AuthService())],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: const MyHomePage(),
+      home: const AuthWidget(),
       theme: ThemeData(
         textSelectionTheme: const TextSelectionThemeData(
             cursorColor: Color.fromARGB(255, 239, 7, 96)),
