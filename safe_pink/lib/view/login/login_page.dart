@@ -4,6 +4,7 @@ import '../../components/style_form_field.dart';
 import '../register/register_page.dart';
 import 'dart:core';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
