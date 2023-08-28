@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:safe_pink/view/home/home_page.dart';
 import '../../components/style_form_field.dart';
-import 'register_page.dart';
+import '../register/register_page.dart';
+import 'dart:core';
+import 'package:email_validator/email_validator.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,7 +19,13 @@ class _LoginPageState extends State<LoginPage> {
 
   _submitForm() {
     if (formKey.currentState!.validate()) {
-      print('validado');
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MyHomePage(),
+        ),
+        (Route<dynamic> route) => false,
+      );
     }
   }
 
@@ -67,6 +76,15 @@ class _LoginPageState extends State<LoginPage> {
                         TextFormFieldComponent(
                           controller: passwordController,
                           label: 'senha',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Digite seu email';
+                            }
+                            if (!EmailValidator.validate(value)) {
+                              return 'Digite um email valido';
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 20),
                         Container(
