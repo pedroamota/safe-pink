@@ -26,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
               emailController.text,
               passwordController.text,
             );
+        setState(() {});
       } on AuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

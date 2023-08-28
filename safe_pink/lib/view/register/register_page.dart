@@ -70,6 +70,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(height: 10),
                       TextFormFieldComponent(
+                        controller: usernameController,
+                        label: 'Telefone',
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormFieldComponent(
                         controller: passwordController,
                         label: 'senha',
                       ),

@@ -17,7 +17,7 @@ class TextClass extends StatelessWidget {
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 20,
-        color: isRosa ? const Color.fromARGB(255, 239, 7, 96) : null,
+        color: isRosa ? const Color.fromARGB(255, 239, 7, 96) : Colors.white,
       ),
     );
   }

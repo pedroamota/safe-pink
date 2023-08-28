@@ -25,7 +25,7 @@ class InfoPage extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: const Text(
-              'Safe Pink',
+              'Informações',
               style: TextStyle(
                 color: Color.fromARGB(255, 239, 7, 96),
                 fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class InfoPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.white,
               ),
-              height: size.height * .05,
+              height: size.height * .07,
               width: size.width * .7,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
@@ -81,7 +81,7 @@ class InfoPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.white,
               ),
-              height: size.height * .05,
+              height: size.height * .07,
               width: size.width * .7,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
