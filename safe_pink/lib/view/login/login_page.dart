@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
       } on AuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.purple,
             content: Text(e.message),
           ),
         );
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(
               horizontal: 30,
-              vertical: 120,
+              vertical: 80,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(
-                  height: size.width * .3,
+                  height: size.width * .4,
                   child: const Image(
                     image: AssetImage("assets/alert_rosa.png"),
                   ),
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            color: Colors.red,
+                            color: const Color.fromARGB(255, 189, 22, 86),
                           ),
                           child: const Text("Entrar"),
                         ),

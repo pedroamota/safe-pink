@@ -17,8 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
 
   submitForm() {
-    if (formKey.currentState!.validate()) {
-    }
+    if (formKey.currentState!.validate()) {}
   }
 
   @override
@@ -33,10 +32,11 @@ class _RegisterPageState extends State<RegisterPage> {
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(
               horizontal: 40,
-              vertical: 120,
+              vertical: 80,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'Safe Pink.',
@@ -47,12 +47,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 SizedBox(
-                  height: size.width * .3,
+                  height: size.width * .1,
                 ),
                 Form(
                   key: formKey,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextFormFieldComponent(
                         controller: emailController,
@@ -80,12 +80,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          color: Colors.red,
+                          color: const Color.fromARGB(255, 189, 22, 86),
                         ),
                         child: const Text("Entrar"),
                       ),
-                      const SizedBox(height: 30),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text('Já possui uma conta?'),
                           TextButton(
@@ -109,23 +109,22 @@ class _RegisterPageState extends State<RegisterPage> {
                     ],
                   ),
                 ),
-                SizedBox(height: size.height * .2),
-                Center(
-                  child: Row(
-                    children: [
-                      const Text('Termos de uso e Politicas de Privacidade'),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Ler mais',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                SizedBox(height: size.height * .1),
+                Wrap(
+                  children: [
+                    const Text('Termos de uso e Politicas de Privacidade'),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Ler mais',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 )
               ],
             ),

@@ -21,6 +21,7 @@ class AlertPopUp {
             title: const Text(
               'Deseja realmente acionar o alarme?',
               style: style,
+              textAlign: TextAlign.center,
             ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
@@ -41,7 +42,7 @@ class AlertPopUp {
                         )),
                     Container(
                       color: const Color.fromARGB(255, 239, 7, 96),
-                      height: MediaQuery.of(context).size.height * .06,
+                      height: MediaQuery.of(context).size.height * .07,
                       width: 5,
                     ),
                     TextButton(

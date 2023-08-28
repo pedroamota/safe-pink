@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:safe_pink/view/home/alert/alert_pop_up.dart';
 import 'package:safe_pink/view/home/info/info_page.dart';
+import 'package:safe_pink/view/home/perfil/perfil_page.dart';
 import 'package:safe_pink/view/login/login_page.dart';
 
 import '../../components/components_style.dart';
@@ -13,8 +14,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -174,17 +173,18 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: size.width * .06),
                       child: const Image(
-                          image: AssetImage("assets/user.png"),
-                          fit: BoxFit.cover),
+                        image: AssetImage("assets/user.png"),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    Text("Perfil", style: ComponentsStyle.text)
+                    const Text("Perfil", style: ComponentsStyle.text)
                   ],
                 ),
               ),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
+                  builder: (context) => const PerfilPage(),
                 ),
               ),
             ),

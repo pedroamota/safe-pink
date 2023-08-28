@@ -10,4 +10,6 @@ class ComponentsStyle {
     fontWeight: FontWeight.bold,
     fontSize: 20,
   );
+
+  //Colocar as cores
 }
