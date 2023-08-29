@@ -60,6 +60,9 @@ class AuthService extends ChangeNotifier {
         throw AuthException(message: 'Senha fraca');
       } else if (e.code == 'email-already-in-use') {
         throw AuthException(message: 'Email já cadastrado');
+      }else{
+        throw AuthException(message: e.code);
+
       }
     }
   }

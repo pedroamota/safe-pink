@@ -4,8 +4,6 @@ import 'package:safe_pink/view/home/friends/friends_page.dart';
 import 'package:safe_pink/view/home/info/info_page.dart';
 import 'package:safe_pink/view/home/local/local_page.dart';
 import 'package:safe_pink/view/home/perfil/perfil_page.dart';
-import 'package:safe_pink/view/login/login_page.dart';
-
 import '../../components/components_style.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -98,8 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: size.width * .06),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.width * .06),
                           child: const Image(
                               image: AssetImage("assets/local.png"),
                               fit: BoxFit.cover),
@@ -108,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-                  onTap: ()=> Navigator.push(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const LocalPage(),
@@ -130,8 +128,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: size.width * .06),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: size.width * .06),
                           child: const Image(
                               image: AssetImage("assets/friends.png"),
                               fit: BoxFit.cover),
@@ -140,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-                  onTap: () =>Navigator.push(
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const FriendsPage(),
@@ -164,7 +162,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               image: AssetImage("assets/info.png"),
                               fit: BoxFit.cover),
                         ),
-                        const Text("Informações", style: ComponentsStyle.text)
+                        const Text(
+                          "Informações",
+                          style: ComponentsStyle.text,
+                        )
                       ],
                     ),
                   ),

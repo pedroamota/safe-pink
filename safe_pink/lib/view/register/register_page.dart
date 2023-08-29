@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/view/login/login_page.dart';
 import '../../components/style_form_field.dart';
+import '../../database/registerDB.dart';
 import '../../services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -21,7 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   bool loading = false;
 
-  submitForm() async {
+  submitForm(auth) async {
     if (formKey.currentState!.validate()) {
       FocusNode().unfocus();
       try {
@@ -32,6 +33,11 @@ class _RegisterPageState extends State<RegisterPage> {
               emailController.text,
               passwordController.text,
             );
+        RegisterDB(auth: auth).saveUser(
+          nameController.text,
+          usernameController.text,
+          phoneController.text,
+        );
       } on AuthException catch (e) {
         setState(() {
           loading = false;
@@ -118,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         const SizedBox(height: 10),
                         TextFormFieldComponent(
-                          controller: usernameController,
+                          controller: phoneController,
                           label: 'Telefone',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -148,9 +154,15 @@ class _RegisterPageState extends State<RegisterPage> {
                               borderRadius: BorderRadius.circular(25),
                               color: const Color.fromARGB(255, 189, 22, 86),
                             ),
-                            child: const Text("Entrar"),
+                            child: loading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : const Text("Entrar"),
                           ),
-                          onTap: () => submitForm(),
+                          onTap: () => submitForm(
+                            Provider.of<AuthService>(context, listen: false),
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

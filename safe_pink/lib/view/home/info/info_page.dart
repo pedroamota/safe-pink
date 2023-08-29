@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:safe_pink/services/calls.dart';
+import 'package:safe_pink/services/calls_service.dart';
 
 class InfoPage extends StatelessWidget {
   const InfoPage({super.key});
