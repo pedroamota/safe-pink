@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:safe_pink/view/home/alert/alert_pop_up.dart';
+import 'package:safe_pink/view/home/friends/friends_page.dart';
 import 'package:safe_pink/view/home/info/info_page.dart';
+import 'package:safe_pink/view/home/local/local_page.dart';
 import 'package:safe_pink/view/home/perfil/perfil_page.dart';
 import 'package:safe_pink/view/login/login_page.dart';
 
@@ -87,22 +89,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
 
                 //LOCAL
-                Container(
-                  width: size.width * .35,
-                  height: size.width * .35,
-                  decoration: ComponentsStyle.bordas,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: size.width * .06),
-                        child: const Image(
-                            image: AssetImage("assets/local.png"),
-                            fit: BoxFit.cover),
-                      ),
-                      Text("Localização", style: ComponentsStyle.text)
-                    ],
+                GestureDetector(
+                  child: Container(
+                    width: size.width * .35,
+                    height: size.width * .35,
+                    decoration: ComponentsStyle.bordas,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: size.width * .06),
+                          child: const Image(
+                              image: AssetImage("assets/local.png"),
+                              fit: BoxFit.cover),
+                        ),
+                        const Text("Localização", style: ComponentsStyle.text)
+                      ],
+                    ),
+                  ),
+                  onTap: ()=> Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LocalPage(),
+                    ),
                   ),
                 ),
               ],
@@ -111,22 +121,30 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 //FRIENDS
-                Container(
-                  width: size.width * .35,
-                  height: size.width * .35,
-                  decoration: ComponentsStyle.bordas,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: size.width * .06),
-                        child: const Image(
-                            image: AssetImage("assets/friends.png"),
-                            fit: BoxFit.cover),
-                      ),
-                      Text("Amigos", style: ComponentsStyle.text)
-                    ],
+                GestureDetector(
+                  child: Container(
+                    width: size.width * .35,
+                    height: size.width * .35,
+                    decoration: ComponentsStyle.bordas,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: size.width * .06),
+                          child: const Image(
+                              image: AssetImage("assets/friends.png"),
+                              fit: BoxFit.cover),
+                        ),
+                        const Text("Amigos", style: ComponentsStyle.text)
+                      ],
+                    ),
+                  ),
+                  onTap: () =>Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FriendsPage(),
+                    ),
                   ),
                 ),
 
@@ -146,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               image: AssetImage("assets/info.png"),
                               fit: BoxFit.cover),
                         ),
-                        Text("Informações", style: ComponentsStyle.text)
+                        const Text("Informações", style: ComponentsStyle.text)
                       ],
                     ),
                   ),
