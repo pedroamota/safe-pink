@@ -31,6 +31,7 @@ class AuthService extends ChangeNotifier {
         email: email,
         password: password,
       );
+      isLoading = false;
       _getUser();
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -38,6 +39,9 @@ class AuthService extends ChangeNotifier {
         throw AuthException(message: 'Usuario não encontrado. Cadastre-se');
       } else if (e.code == 'wrong-password') {
         throw AuthException(message: 'Senha incorreta. Tente novamente');
+      } else if (e.code == 'too-many-requests') {
+        throw AuthException(
+            message: 'Acesso bloqueado, tente novamente mais tarde');
       }
     }
   }
@@ -48,6 +52,7 @@ class AuthService extends ChangeNotifier {
         email: email,
         password: password,
       );
+      isLoading = false;
       _getUser();
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -61,6 +66,7 @@ class AuthService extends ChangeNotifier {
 
   logOut() async {
     await _auth.signOut();
+    isLoading = true;
     _getUser();
   }
 }

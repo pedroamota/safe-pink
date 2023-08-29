@@ -104,7 +104,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     width: size.width * .56,
                     padding: EdgeInsets.zero,
                     child: Text(
-                      user.usuario!.email!,
+                      '${user.usuario?.email}',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -209,6 +209,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 const Text('Deseja sair do aplicativo?'),
                 TextButton(
                   onPressed: () => setState(() {
+                    Navigator.of(context).pop();
                     AuthService().logOut();
                   }),
                   child: const Text(

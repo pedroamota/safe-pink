@@ -12,7 +12,6 @@ class AuthWidget extends StatefulWidget {
 }
 
 class _AuthWidgetState extends State<AuthWidget> {
-  
   loading() {
     return const Scaffold(
       body: Center(
@@ -24,7 +23,8 @@ class _AuthWidgetState extends State<AuthWidget> {
   @override
   Widget build(BuildContext context) {
     AuthService auth = Provider.of<AuthService>(context);
-
+    print('--------------------');
+    print(auth.isLoading);
     if (auth.isLoading) {
       return loading();
     } else if (auth.usuario == null) {

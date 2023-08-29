@@ -6,7 +6,6 @@ import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/view/login/auth_widget.dart';
 
 import 'firebase_options.dart';
-import 'view/home/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -3,7 +3,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/services/auth_service.dart';
-import 'package:safe_pink/view/home/home_page.dart';
 import '../../components/style_form_field.dart';
 import '../register/register_page.dart';
 
@@ -18,16 +17,23 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
+  bool loading = false;
 
   _submitForm() async {
     if (formKey.currentState!.validate()) {
+      FocusNode().unfocus();
       try {
+        setState(() {
+          loading = true;
+        });
         await context.read<AuthService>().login(
               emailController.text,
               passwordController.text,
             );
-        setState(() {});
       } on AuthException catch (e) {
+        setState(() {
+          loading = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.purple,
@@ -111,7 +117,11 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(25),
                             color: const Color.fromARGB(255, 189, 22, 86),
                           ),
-                          child: const Text("Entrar"),
+                          child: loading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : const Text("Entrar"),
                         ),
                         onTap: () => _submitForm(),
                       ),
