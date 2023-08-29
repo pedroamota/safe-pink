@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_pink/main.dart';
+import 'package:safe_pink/view/home/home_page.dart';
 import 'package:safe_pink/view/login/login_page.dart';
 import '../../components/style_form_field.dart';
-import '../../database/registerDB.dart';
+import '../../database/servicesDB.dart';
 import '../../services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -33,11 +37,21 @@ class _RegisterPageState extends State<RegisterPage> {
               emailController.text,
               passwordController.text,
             );
-        RegisterDB(auth: auth).saveUser(
-          nameController.text,
-          usernameController.text,
-          phoneController.text,
-        );
+        ServicesDB(auth: auth)
+            .saveUser(
+              nameController.text,
+              usernameController.text,
+              phoneController.text,
+            )
+            .whenComplete(
+              () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MyApp(),
+                ),
+                (Route<dynamic> route) => false,
+              ),
+            );
       } on AuthException catch (e) {
         setState(() {
           loading = false;
@@ -158,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ? const CircularProgressIndicator(
                                     color: Colors.white,
                                   )
-                                : const Text("Entrar"),
+                                : const Text("Registrar"),
                           ),
                           onTap: () => submitForm(
                             Provider.of<AuthService>(context, listen: false),

@@ -5,7 +5,8 @@ class user extends ChangeNotifier {
   String name;
   String senha;
   String telefone;
-  String? localizacao;
+  String? latitude;
+  String? longitude;
   List<String>? friends;
 
   user({
@@ -13,7 +14,8 @@ class user extends ChangeNotifier {
     required this.name,
     required this.senha,
     required this.telefone,
-    this.localizacao,
+    this.latitude,
+    this.longitude,
     this.friends,
   });
 }

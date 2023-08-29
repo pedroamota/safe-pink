@@ -139,12 +139,11 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     const Text('Não possui uma conta?'),
                     TextButton(
-                      onPressed: () => Navigator.pushAndRemoveUntil(
+                      onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const RegisterPage(),
                         ),
-                        (Route<dynamic> route) => false,
                       ),
                       child: const Text(
                         'Register',
