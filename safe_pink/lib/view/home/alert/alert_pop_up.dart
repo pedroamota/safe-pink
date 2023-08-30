@@ -36,13 +36,15 @@ class AlertPopUp {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextButton(
-                      onPressed: () => NotificationService().showNotification(
-                        CustomNotification(
-                          id: 1,
-                          title: 'ALERTA',
-                          body: 'Alerta enviado a sua lista de amigos',
+                      onPressed: () => {
+                        NotificationService().showNotification(
+                          CustomNotification(
+                            id: 1,
+                            title: 'ALERTA',
+                            body: 'Alerta enviado a sua lista de amigos',
+                          ),
                         ),
-                      ),
+                      },
                       child: const Text(
                         'Sim',
                         style: style,

@@ -20,7 +20,7 @@ class FriendListScreen extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return Container();
           } else {
             Map<String, dynamic> userData =
                 snapshot.data!.data() as Map<String, dynamic>;

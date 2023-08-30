@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import '../../components/style_form_field.dart';
 import '../register/register_page.dart';
@@ -29,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         await context.read<AuthService>().login(
               emailController.text,
               passwordController.text,
-            );
+            );        
       } on AuthException catch (e) {
         setState(() {
           loading = false;

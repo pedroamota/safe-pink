@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 
 import 'DBFirestore.dart';
@@ -35,6 +37,32 @@ class ServicesDB {
       print('User data saved successfully.');
     } catch (e) {
       print('Error saving user data: $e');
+    }
+  }
+
+  void getData(String email, context) async {
+    final user = Provider.of<Usuario>(context, listen: false);
+
+    try {
+      DocumentSnapshot userSnapshot =
+          await FirebaseFirestore.instance.collection('dados').doc(email).get();
+
+      if (userSnapshot.exists) {
+        Map<String, dynamic> userData =
+            userSnapshot.data() as Map<String, dynamic>;
+        user.name = userData['name'];
+        user.username = userData['username'];
+        user.telefone = userData['phone'];
+        user.friends = userData['friends'];
+        user.alert = userData['alert'];
+        user.help = userData['help'];
+        user.latitude = userData['latitude'];
+        user.longitude = userData['longitude'];
+      } else {
+        print('Documento do usuário não encontrado.');
+      }
+    } catch (e) {
+      print('Erro ao obter dados do usuário: $e');
     }
   }
 

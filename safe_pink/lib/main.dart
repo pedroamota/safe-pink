@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/view/login/auth_widget.dart';
 
@@ -15,7 +17,10 @@ void main() async {
   );
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => AuthService())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => Usuario()),
+      ],
       child: const MyApp(),
     ),
   );

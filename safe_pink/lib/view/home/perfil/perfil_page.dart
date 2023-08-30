@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_pink/models/user.dart';
 
 import '../../../services/auth_service.dart';
 
@@ -14,7 +16,8 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    AuthService user = Provider.of<AuthService>(context);
+    AuthService email = Provider.of<AuthService>(context, listen: false);
+    final user = Provider.of<Usuario>(context, listen: false);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 239, 7, 96),
@@ -68,9 +71,9 @@ class _PerfilPageState extends State<PerfilPage> {
                     alignment: Alignment.center,
                     width: size.width * .56,
                     padding: EdgeInsets.zero,
-                    child: const Text(
-                      'Pedro Mota',
-                      style: TextStyle(
+                    child: Text(
+                      '${user.name}',
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
                       ),
@@ -104,7 +107,7 @@ class _PerfilPageState extends State<PerfilPage> {
                     width: size.width * .56,
                     padding: EdgeInsets.zero,
                     child: Text(
-                      '${user.usuario?.email}',
+                      '${email.usuario?.email}',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -128,19 +131,19 @@ class _PerfilPageState extends State<PerfilPage> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Icon(
+                children: [
+                 const Icon(
                     Icons.local_phone_outlined,
                     color: Color.fromARGB(255, 239, 7, 96),
                   ),
                   Text(
-                    '35999693123',
-                    style: TextStyle(
+                    '${user.telefone}',
+                    style:const TextStyle(
                       color: Colors.black,
                       fontSize: 20,
                     ),
                   ),
-                  SizedBox(),
+                  const SizedBox(),
                 ],
               ),
             ),
@@ -208,10 +211,12 @@ class _PerfilPageState extends State<PerfilPage> {
               children: [
                 const Text('Deseja sair do aplicativo?'),
                 TextButton(
-                  onPressed: () => setState(() {
-                    Navigator.of(context).pop();
-                    AuthService().logOut();
-                  }),
+                  onPressed: () => setState(
+                    () {
+                      Navigator.of(context).pop();
+                      AuthService().logOut();
+                    },
+                  ),
                   child: const Text(
                     'Sair',
                     style: TextStyle(
