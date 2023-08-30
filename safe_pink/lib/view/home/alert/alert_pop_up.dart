@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safe_pink/services/notify_service.dart';
 
 class AlertPopUp {
   show(context) {
@@ -35,18 +36,25 @@ class AlertPopUp {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Sim',
-                          style: style,
-                        )),
+                      onPressed: () => NotificationService().showNotification(
+                        CustomNotification(
+                          id: 1,
+                          title: 'ALERTA',
+                          body: 'Alerta enviado a sua lista de amigos',
+                        ),
+                      ),
+                      child: const Text(
+                        'Sim',
+                        style: style,
+                      ),
+                    ),
                     Container(
                       color: const Color.fromARGB(255, 239, 7, 96),
                       height: MediaQuery.of(context).size.height * .07,
                       width: 5,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.of(context).pop(),
                       child: const Text(
                         'Não',
                         style: style,
