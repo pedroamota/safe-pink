@@ -114,12 +114,24 @@ class ServicesDB {
     });
   }
 
-  sendMessage(List<String> friends) {
-    friends.forEach((i) async {
-      await db.collection('dados/$i').doc('mensagem').update({
-        'name': auth.usuario!.email,
-        'alert': true,
-      });
-    });
+  Future<void> sendMessage(List<dynamic> emailList, String name) async {
+    try {
+      CollectionReference dadosCollection =
+          FirebaseFirestore.instance.collection('dados');
+
+      for (String email in emailList) {
+        DocumentReference userDocRef = dadosCollection.doc(email);
+        Map<String, dynamic> updatedData = {
+          'alert': true,
+          'help': name,
+        };
+        await userDocRef.update(updatedData);
+        print('Document for $email updated successfully.');
+      }
+
+      print('All documents updated.');
+    } catch (e) {
+      print('Error updating documents: $e');
+    }
   }
 }

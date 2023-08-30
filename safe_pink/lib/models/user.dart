@@ -8,7 +8,7 @@ class Usuario extends ChangeNotifier {
   String? telefone;
   String? latitude;
   String? longitude;
-  List<String>? friends;
+  List<dynamic>? friends;
   String? help;
-  bool? alert;
+  bool alert = false;
 }

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:safe_pink/database/servicesDB.dart';
+import 'package:safe_pink/models/user.dart';
+import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/services/notify_service.dart';
 
 class AlertPopUp {
   show(context) {
+    final auth = Provider.of<AuthService>(context, listen: false);
+    final user = Provider.of<Usuario>(context, listen: false);
+    final db = ServicesDB(auth: auth);
+
     const style = TextStyle(
       color: Color.fromARGB(255, 239, 7, 96),
       fontWeight: FontWeight.bold,
@@ -37,6 +45,7 @@ class AlertPopUp {
                   children: [
                     TextButton(
                       onPressed: () => {
+                        db.sendMessage(user.friends!, user.name!),
                         NotificationService().showNotification(
                           CustomNotification(
                             id: 1,
@@ -84,21 +93,22 @@ class AlertPopUp {
       ),
     );
     return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            contentPadding: const EdgeInsets.only(top: 20),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(15),
-              ),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.only(top: 20),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
             ),
-            title: Text(
-              '$menssage precisa de ajuda!. Ela está na localização x e y',
-              style: style,
-              textAlign: TextAlign.center,
-            ),
-          );
-        },);
+          ),
+          title: Text(
+            '$menssage precisa de ajuda! Ela está na localização x',
+            style: style,
+            textAlign: TextAlign.center,
+          ),
+        );
+      },
+    );
   }
 }

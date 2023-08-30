@@ -213,8 +213,8 @@ class _PerfilPageState extends State<PerfilPage> {
                 TextButton(
                   onPressed: () => setState(
                     () {
-                      Navigator.of(context).pop();
                       AuthService().logOut();
+                      Navigator.of(context).pop();
                     },
                   ),
                   child: const Text(
