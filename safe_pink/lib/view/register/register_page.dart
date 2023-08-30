@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/main.dart';
-import 'package:safe_pink/view/home/home_page.dart';
 import 'package:safe_pink/view/login/login_page.dart';
+
 import '../../components/style_form_field.dart';
 import '../../database/servicesDB.dart';
 import '../../services/auth_service.dart';

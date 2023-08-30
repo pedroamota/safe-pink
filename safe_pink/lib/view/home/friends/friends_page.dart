@@ -1,7 +1,10 @@
 import 'dart:core';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:safe_pink/components/style_form_field.dart';
+import 'package:safe_pink/database/servicesDB.dart';
+import 'package:safe_pink/services/auth_service.dart';
 
 class FriendsPage extends StatefulWidget {
   const FriendsPage({super.key});
@@ -13,9 +16,49 @@ class FriendsPage extends StatefulWidget {
 class _FriendsPageState extends State<FriendsPage> {
   final friendController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool loading = false;
 
-  submit(){
-    
+  submit(auth) async {
+    if (formKey.currentState!.validate()) {
+      setState(() {
+        loading = true;
+        FocusNode().unfocus();
+      });
+
+      try {
+        ServicesDB(auth: auth)
+            .addFriend(
+              friendController.text,
+            )
+            .whenComplete(() => {
+                  setState(() {
+                    loading = false;
+                  }),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.blue,
+                      content: Text('Amigo adicionado'),
+                    ),
+                  ),
+                });
+      } on AuthException catch (e) {
+        setState(() {
+          loading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.purple,
+            content: Text(e.message),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    friendController.dispose();
+    super.dispose();
   }
 
   @override
@@ -63,24 +106,40 @@ class _FriendsPageState extends State<FriendsPage> {
                   width: size.width * .7,
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: size.height * .07,
-                        child: TextFormFieldComponent(
-                          controller: friendController,
-                          label: 'Adicione um amigo',
+                      Form(
+                        key: formKey,
+                        child: SizedBox(
+                          height: size.height * .2,
+                          child: TextFormFieldComponent(
+                            controller: friendController,
+                            label: 'Adicione um amigo',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Digite seu email';
+                              } else if (!EmailValidator.validate(value)) {
+                                return 'Digite um email valido';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
                       ),
                       const SizedBox(height: 30),
-                      
-                    ],  
+                    ],
                   ),
                 ),
                 IconButton(
-                  onPressed: submit,
-                  icon: const Icon(
-                    Icons.person_add_rounded,
-                    size: 40,
+                  onPressed: () => submit(
+                    Provider.of<AuthService>(context, listen: false),
                   ),
+                  icon: loading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : const Icon(
+                          Icons.person_add_rounded,
+                          size: 40,
+                        ),
                 )
               ],
             )

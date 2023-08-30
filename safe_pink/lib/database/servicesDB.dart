@@ -29,7 +29,7 @@ class ServicesDB {
         'friends': [],
         'latitude': '',
         'longitude': '',
-        'help':'',
+        'help': '',
         'alert': false,
       });
       print('User data saved successfully.');
@@ -38,11 +38,28 @@ class ServicesDB {
     }
   }
 
-  addFriend(List<String> friends) async {
-    await db
-        .collection('dados')
-        .doc('${auth.usuario!.email}')
-        .update({'friends': friends});
+  addFriend(newEmail) async {
+    final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
+
+    DocumentSnapshot userSnapshot = await userDocRef.get();
+
+    if (userSnapshot.exists) {
+      List<dynamic> currentFriends = userSnapshot.get('friends') ?? [];
+
+      if (!currentFriends.contains(newEmail)) {
+        currentFriends.add(newEmail);
+
+        await userDocRef.update({
+          'friends': currentFriends,
+        });
+
+        print('Novo amigo adicionado com sucesso!');
+      } else {
+        print('O email do novo amigo já está na lista.');
+      }
+    } else {
+      print('Documento do usuário não encontrado.');
+    }
   }
 
   sendMessage(List<String> friends) {
