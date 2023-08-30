@@ -6,6 +6,8 @@ import 'package:safe_pink/components/style_form_field.dart';
 import 'package:safe_pink/database/servicesDB.dart';
 import 'package:safe_pink/services/auth_service.dart';
 
+import 'list_friends.dart';
+
 class FriendsPage extends StatefulWidget {
   const FriendsPage({super.key});
 
@@ -67,6 +69,7 @@ class _FriendsPageState extends State<FriendsPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final auth = Provider.of<AuthService>(context, listen: false);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 239, 7, 96),
@@ -113,7 +116,7 @@ class _FriendsPageState extends State<FriendsPage> {
                       Form(
                         key: formKey,
                         child: SizedBox(
-                          height: size.height * .2,
+                          height: size.height * .15,
                           child: TextFormFieldComponent(
                             controller: friendController,
                             label: 'Adicione um amigo',
@@ -128,14 +131,14 @@ class _FriendsPageState extends State<FriendsPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 30),
+                      FriendListScreen(
+                        userEmail: auth.usuario!.email!,
+                      )
                     ],
                   ),
                 ),
                 IconButton(
-                  onPressed: () => submit(
-                    Provider.of<AuthService>(context, listen: false),
-                  ),
+                  onPressed: () => submit(auth),
                   icon: loading
                       ? const CircularProgressIndicator(
                           color: Colors.white,
