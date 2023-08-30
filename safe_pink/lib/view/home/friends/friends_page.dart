@@ -22,15 +22,18 @@ class _FriendsPageState extends State<FriendsPage> {
     if (formKey.currentState!.validate()) {
       setState(() {
         loading = true;
-        FocusNode().unfocus();
       });
 
       try {
+        FocusNode().unfocus();
+
         ServicesDB(auth: auth)
             .addFriend(
               friendController.text,
             )
             .whenComplete(() => {
+                  friendController.clear(),
+                  FocusNode().unfocus(),
                   setState(() {
                     loading = false;
                   }),
@@ -67,6 +70,7 @@ class _FriendsPageState extends State<FriendsPage> {
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 239, 7, 96),
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: size.height * .1,
