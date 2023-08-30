@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/database/servicesDB.dart';
+import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/view/home/alert/alert_pop_up.dart';
 import 'package:safe_pink/view/home/friends/friends_page.dart';
@@ -19,18 +21,24 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   getData() async {
     final auth = Provider.of<AuthService>(context, listen: false);
-    ServicesDB(auth: auth).getData(auth.usuario!.email!, context);
+    final db = ServicesDB(auth: auth);
+    db.getData(auth.usuario!.email!, context);
+    db.listenToAlertChanges(auth.usuario!.email!, context);
   }
 
   @override
   void initState() {
     getData();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final auth = Provider.of<AuthService>(context, listen: false);
+    final user = Provider.of<Usuario>(context, listen: false);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 239, 7, 96),
 

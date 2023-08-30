@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
+import 'package:safe_pink/view/home/alert/alert_pop_up.dart';
 
 import 'DBFirestore.dart';
 
@@ -88,6 +89,29 @@ class ServicesDB {
     } else {
       print('Documento do usuário não encontrado.');
     }
+  }
+
+  void listenToAlertChanges(String userEmail, context) {
+    FirebaseFirestore.instance
+        .collection('dados')
+        .doc(userEmail)
+        .snapshots()
+        .listen((snapshot) {
+      if (snapshot.exists) {
+        Map<String, dynamic> userData = snapshot.data() as Map<String, dynamic>;
+        bool alertStatus = userData['alert'] ?? false;
+        String message = userData['help'] ?? false;
+        // Aqui você pode fazer o que for necessário com o status do alerta
+        if (alertStatus) {
+          AlertPopUp().alert(context, message);
+          // Execute as ações necessárias quando o alerta estiver ativado
+        } else {
+          print('Alerta desativado.');
+        }
+      } else {
+        print('Documento do usuário não encontrado.');
+      }
+    });
   }
 
   sendMessage(List<String> friends) {

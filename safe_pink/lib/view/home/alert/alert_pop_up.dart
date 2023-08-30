@@ -13,7 +13,7 @@ class AlertPopUp {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            contentPadding: EdgeInsets.only(top: 20),
+            contentPadding: const EdgeInsets.only(top: 20),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(15),
@@ -68,5 +68,37 @@ class AlertPopUp {
             ),
           );
         });
+  }
+
+  alert(context, menssage) {
+    const style = TextStyle(
+      color: Color.fromARGB(255, 239, 7, 96),
+      fontWeight: FontWeight.bold,
+      fontSize: 20,
+    );
+    NotificationService().showNotification(
+      CustomNotification(
+        id: 1,
+        title: '$menssage precisa de ajuda!',
+        body: 'Localização',
+      ),
+    );
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding: const EdgeInsets.only(top: 20),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+            ),
+            title: Text(
+              '$menssage precisa de ajuda!. Ela está na localização x e y',
+              style: style,
+              textAlign: TextAlign.center,
+            ),
+          );
+        },);
   }
 }
