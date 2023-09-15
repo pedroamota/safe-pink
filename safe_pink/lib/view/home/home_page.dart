@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:safe_pink/database/servicesDB.dart';
 import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
+import 'package:safe_pink/services/local_service.dart';
 import 'package:safe_pink/view/home/alert/alert_pop_up.dart';
 import 'package:safe_pink/view/home/friends/friends_page.dart';
 import 'package:safe_pink/view/home/info/info_page.dart';
@@ -22,6 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   getData() async {
     final auth = Provider.of<AuthService>(context, listen: false);
     final db = ServicesDB(auth: auth);
+    final local = Local().getLocation();
     db.getData(auth.usuario!.email!, context);
     db.listenToAlertChanges(auth.usuario!.email!, context);
   }
