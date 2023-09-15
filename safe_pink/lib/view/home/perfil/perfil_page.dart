@@ -2,6 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/models/user.dart';
+import 'package:safe_pink/view/home/perfil/widgets/email_widget.dart';
+import 'package:safe_pink/view/home/perfil/widgets/password_widget.dart';
+import 'package:safe_pink/view/home/perfil/widgets/phone_widget.dart';
+import 'package:safe_pink/view/home/perfil/widgets/user_widget.dart';
 
 import '../../../services/auth_service.dart';
 
@@ -52,99 +56,108 @@ class _PerfilPageState extends State<PerfilPage> {
             const SizedBox(height: 80),
 
             //NOME DO USUARIO
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-              ),
-              height: size.height * .07,
-              width: size.width * .7,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(
-                    Icons.person_rounded,
-                    color: Color.fromARGB(255, 239, 7, 96),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    width: size.width * .56,
-                    padding: EdgeInsets.zero,
-                    child: Text(
-                      '${user.name}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                      overflow: TextOverflow.ellipsis,
+            GestureDetector(
+              onTap: () => UserWidget().show(context),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
+                height: size.height * .07,
+                width: size.width * .7,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(
+                      Icons.person_rounded,
+                      color: Color.fromARGB(255, 239, 7, 96),
                     ),
-                  ),
-                  const SizedBox(),
-                ],
+                    Container(
+                      alignment: Alignment.center,
+                      width: size.width * .56,
+                      padding: EdgeInsets.zero,
+                      child: Text(
+                        '${user.name}',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),
 
             //EMAIL DO USUARIO
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-              ),
-              height: size.height * .07,
-              width: size.width * .7,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(
-                    Icons.email_outlined,
-                    color: Color.fromARGB(255, 239, 7, 96),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    width: size.width * .56,
-                    padding: EdgeInsets.zero,
-                    child: Text(
-                      '${email.usuario?.email}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
-                      overflow: TextOverflow.ellipsis,
+            GestureDetector(
+              onTap: () => EmailWidget().show(context),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
+                height: size.height * .07,
+                width: size.width * .7,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(
+                      Icons.email_outlined,
+                      color: Color.fromARGB(255, 239, 7, 96),
                     ),
-                  ),
-                ],
+                    Container(
+                      alignment: Alignment.center,
+                      width: size.width * .56,
+                      padding: EdgeInsets.zero,
+                      child: Text(
+                        '${email.usuario?.email}',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),
 
             //TELEFONE DO USUARIO
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-              ),
-              height: size.height * .07,
-              width: size.width * .7,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                 const Icon(
-                    Icons.local_phone_outlined,
-                    color: Color.fromARGB(255, 239, 7, 96),
-                  ),
-                  Text(
-                    '${user.telefone}',
-                    style:const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
+            GestureDetector(
+              onTap: () => PhoneWidget().show(context),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
+                height: size.height * .07,
+                width: size.width * .7,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(
+                      Icons.local_phone_outlined,
+                      color: Color.fromARGB(255, 239, 7, 96),
                     ),
-                  ),
-                  const SizedBox(),
-                ],
+                    Text(
+                      '${user.telefone}',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                      ),
+                    ),
+                    const SizedBox(),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -179,30 +192,33 @@ class _PerfilPageState extends State<PerfilPage> {
             const SizedBox(height: 20),
 
             //TROCAR SENHA
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-              ),
-              height: size.height * .07,
-              width: size.width * .7,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Icon(
-                    Icons.lock,
-                    color: Color.fromARGB(255, 239, 7, 96),
-                  ),
-                  Text(
-                    'Trocar senha',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
+            GestureDetector(
+              onTap: () => PasswordWidget().show(context),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
+                height: size.height * .07,
+                width: size.width * .7,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Icon(
+                      Icons.lock,
+                      color: Color.fromARGB(255, 239, 7, 96),
                     ),
-                  ),
-                  SizedBox(),
-                ],
+                    Text(
+                      'Trocar senha',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                      ),
+                    ),
+                    SizedBox(),
+                  ],
+                ),
               ),
             ),
             const Spacer(),

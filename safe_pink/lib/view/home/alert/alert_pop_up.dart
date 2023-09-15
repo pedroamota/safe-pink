@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_pink/components/components_style.dart';
 import 'package:safe_pink/database/servicesDB.dart';
 import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
@@ -10,12 +11,6 @@ class AlertPopUp {
     final auth = Provider.of<AuthService>(context, listen: false);
     final user = Provider.of<Usuario>(context, listen: false);
     final db = ServicesDB(auth: auth);
-
-    const style = TextStyle(
-      color: Color.fromARGB(255, 239, 7, 96),
-      fontWeight: FontWeight.bold,
-      fontSize: 20,
-    );
 
     return showDialog(
         context: context,
@@ -29,7 +24,7 @@ class AlertPopUp {
             ),
             title: const Text(
               'Deseja realmente acionar o alarme?',
-              style: style,
+              style: ComponentsStyle.text,
               textAlign: TextAlign.center,
             ),
             content: Column(
@@ -56,7 +51,7 @@ class AlertPopUp {
                       },
                       child: const Text(
                         'Sim',
-                        style: style,
+                        style: ComponentsStyle.text,
                       ),
                     ),
                     Container(
@@ -68,7 +63,7 @@ class AlertPopUp {
                       onPressed: () => Navigator.of(context).pop(),
                       child: const Text(
                         'Não',
-                        style: style,
+                        style: ComponentsStyle.text,
                       ),
                     ),
                   ],

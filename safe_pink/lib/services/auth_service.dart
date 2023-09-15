@@ -5,6 +5,7 @@ class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? usuario;
   bool isLoading = true;
+  bool updating = false;
 
   AuthService() {
     _authCheck();
@@ -60,9 +61,8 @@ class AuthService extends ChangeNotifier {
         throw AuthException(message: 'Senha fraca');
       } else if (e.code == 'email-already-in-use') {
         throw AuthException(message: 'Email já cadastrado');
-      }else{
+      } else {
         throw AuthException(message: e.code);
-
       }
     }
   }
@@ -71,6 +71,34 @@ class AuthService extends ChangeNotifier {
     await _auth.signOut();
     isLoading = true;
     _getUser();
+  }
+
+  updateEmail(String newEmail, String password) async {
+    try {
+      await _auth.signInWithEmailAndPassword(
+        email: usuario!.email!,
+        password: password,
+      );
+      await _auth.currentUser!.updateEmail(newEmail);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        throw AuthException(message: 'Antes faça login novamente');
+      }
+    }
+  }
+
+  updatePassword(String newPassword, String password) async {
+    try {
+      await _auth.signInWithEmailAndPassword(
+        email: usuario!.email!,
+        password: password,
+      );
+      await _auth.currentUser!.updatePassword(newPassword);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        throw AuthException(message: 'Antes faça login novamente');
+      }
+    }
   }
 }
 

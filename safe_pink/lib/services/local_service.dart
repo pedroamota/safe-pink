@@ -12,5 +12,4 @@ class Local{
     throw Exception('Serviço de localização não habilitado.');
   }
 }
-
 }
