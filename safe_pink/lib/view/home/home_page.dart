@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   getData() async {
     final auth = Provider.of<AuthService>(context, listen: false);
     final db = ServicesDB(auth: auth);
-    final local = Local().getLocation();
+    final local = Local().getLocation(context);
     db.getData(auth.usuario!.email!, context);
     db.listenToAlertChanges(auth.usuario!.email!, context);
   }
