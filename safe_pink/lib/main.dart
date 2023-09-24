@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
+import 'package:safe_pink/services/position_service.dart';
 import 'package:safe_pink/view/login/auth_widget.dart';
 
 import 'firebase_options.dart';
@@ -29,6 +30,7 @@ flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
         ChangeNotifierProvider(create: (context) => Usuario()),
+        ChangeNotifierProvider(create: (context) => PositionService())
       ],
       child: const MyApp(),
     ),

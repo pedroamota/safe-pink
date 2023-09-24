@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'map_widget.dart';
+
 class LocalPage extends StatelessWidget {
   const LocalPage({super.key});
 
@@ -34,7 +36,7 @@ class LocalPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(),
+      body: const Center(child: MapWidget()),
     );
   }
 }
