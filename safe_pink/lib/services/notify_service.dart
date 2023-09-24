@@ -26,7 +26,7 @@ class NotificationService {
   }
 
   _initializeNotification() async {
-    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const android = AndroidInitializationSettings('@mipmap/launcher_icon');
     await localNotificationsPlugin
         .initialize(const InitializationSettings(android: android));
   }
