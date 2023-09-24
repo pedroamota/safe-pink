@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class CustomNotification {
@@ -44,6 +45,39 @@ class NotificationService {
       notification.title,
       notification.body,
       NotificationDetails(android: androidDetails),
+    );
+  }
+
+    static alert(context, menssage) {
+    const style = TextStyle(
+      color: Color.fromARGB(255, 239, 7, 96),
+      fontWeight: FontWeight.bold,
+      fontSize: 20,
+    );
+    NotificationService().showNotification(
+      CustomNotification(
+        id: 1,
+        title: '$menssage precisa de ajuda!',
+        body: 'Localização',
+      ),
+    );
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.only(top: 20),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          title: Text(
+            '$menssage precisa de ajuda! Ela está na localização x',
+            style: style,
+            textAlign: TextAlign.center,
+          ),
+        );
+      },
     );
   }
 }

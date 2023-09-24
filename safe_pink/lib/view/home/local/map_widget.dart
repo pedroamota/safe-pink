@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_pink/database/servicesDB.dart';
+import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/services/position_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -15,6 +17,9 @@ class _MapWidgetState extends State<MapWidget> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final position = Provider.of<PositionService>(context, listen: false);
+    final auth = Provider.of<AuthService>(context, listen: false);
+    final db = ServicesDB(auth: auth);
+    db.saveLocal(position.latitude, position.longitude);
 
     return Container(
       width: size.width * .8,

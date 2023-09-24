@@ -31,7 +31,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     getData();
-
     super.initState();
   }
 
@@ -39,7 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final auth = Provider.of<AuthService>(context, listen: false);
-    final user = Provider.of<Usuario>(context, listen: false);
+    final position = Provider.of<PositionService>(context, listen: false);
+    final db = ServicesDB(auth: auth);
+    db.saveLocal(position.latitude, position.longitude);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 239, 7, 96),
@@ -106,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   onTap: () {
-                    AlertPopUp().show(context);
+                    AlertPopUp.show(context);
                   },
                 ),
 

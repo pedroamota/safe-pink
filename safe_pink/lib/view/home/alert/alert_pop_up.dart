@@ -5,9 +5,10 @@ import 'package:safe_pink/database/servicesDB.dart';
 import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/services/notify_service.dart';
+import 'package:safe_pink/view/home/alert/levels_pop_up.dart';
 
 class AlertPopUp {
-  show(context) {
+  static show(context) {
     final auth = Provider.of<AuthService>(context, listen: false);
     final user = Provider.of<Usuario>(context, listen: false);
     final db = ServicesDB(auth: auth);
@@ -39,16 +40,7 @@ class AlertPopUp {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextButton(
-                      onPressed: () => {
-                        db.sendMessage(user.friends!, user.name!),
-                        NotificationService().showNotification(
-                          CustomNotification(
-                            id: 1,
-                            title: 'ALERTA',
-                            body: 'Alerta enviado a sua lista de amigos',
-                          ),
-                        ),
-                      },
+                      onPressed: () => LevelsPopUp.show(context),
                       child: const Text(
                         'Sim',
                         style: ComponentsStyle.text,
@@ -72,38 +64,5 @@ class AlertPopUp {
             ),
           );
         });
-  }
-
-  alert(context, menssage) {
-    const style = TextStyle(
-      color: Color.fromARGB(255, 239, 7, 96),
-      fontWeight: FontWeight.bold,
-      fontSize: 20,
-    );
-    NotificationService().showNotification(
-      CustomNotification(
-        id: 1,
-        title: '$menssage precisa de ajuda!',
-        body: 'Localização',
-      ),
-    );
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding: const EdgeInsets.only(top: 20),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
-          ),
-          title: Text(
-            '$menssage precisa de ajuda! Ela está na localização x',
-            style: style,
-            textAlign: TextAlign.center,
-          ),
-        );
-      },
-    );
   }
 }

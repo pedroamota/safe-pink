@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
-import 'package:safe_pink/view/home/alert/alert_pop_up.dart';
+import 'package:safe_pink/services/notify_service.dart';
 
 import 'DBFirestore.dart';
 
@@ -33,6 +33,7 @@ class ServicesDB {
         'latitude': '',
         'longitude': '',
         'help': '',
+        'msm':'',
         'alert': false,
       });
       print('User data saved successfully.');
@@ -103,7 +104,7 @@ class ServicesDB {
         String message = userData['help'] ?? false;
         // Aqui você pode fazer o que for necessário com o status do alerta
         if (alertStatus) {
-          AlertPopUp().alert(context, message);
+          NotificationService.alert(context, message);
           // Execute as ações necessárias quando o alerta estiver ativado
         } else {
           print('Alerta desativado.');
@@ -114,7 +115,7 @@ class ServicesDB {
     });
   }
 
-  Future<void> sendMessage(List<dynamic> emailList, String name) async {
+  Future<void> sendMessage(List<dynamic> emailList, String name, String msm) async {
     try {
       CollectionReference dadosCollection =
           FirebaseFirestore.instance.collection('dados');
@@ -124,6 +125,7 @@ class ServicesDB {
         Map<String, dynamic> updatedData = {
           'alert': true,
           'help': name,
+          'msm': msm,
         };
         await userDocRef.update(updatedData);
         print('Document for $email updated successfully.');
@@ -133,5 +135,14 @@ class ServicesDB {
     } catch (e) {
       print('Error updating documents: $e');
     }
+  }
+
+  saveLocal(double latitude, double longitude) async {
+    final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
+
+await userDocRef.update({
+  'latitude': latitude,
+  'longitude': longitude,
+});
   }
 }
