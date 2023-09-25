@@ -25,7 +25,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final db = ServicesDB(auth: auth);
     Provider.of<PositionService>(context, listen: false).getPosition();
     db.getData(auth.usuario!.email!, context);
-    db.listenToAlertChanges(auth.usuario!.email!, context);
+    db.listenToAlertChanges(context);
+    db.getLocalFriends(context);
   }
 
   @override

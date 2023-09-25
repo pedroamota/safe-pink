@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_pink/models/makers.dart';
 import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/services/notify_service.dart';
+import 'package:safe_pink/services/position_service.dart';
 
 import 'DBFirestore.dart';
 
@@ -22,6 +26,8 @@ class ServicesDB {
     db = DBFirestore.get();
   }
 
+  //USUARIO
+
   Future<void> saveUser(String name, String username, String phone) async {
     try {
       final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
@@ -33,7 +39,7 @@ class ServicesDB {
         'latitude': '',
         'longitude': '',
         'help': '',
-        'msm':'',
+        'msm': '',
         'alert': false,
       });
       print('User data saved successfully.');
@@ -92,30 +98,8 @@ class ServicesDB {
     }
   }
 
-  void listenToAlertChanges(String userEmail, context) {
-    FirebaseFirestore.instance
-        .collection('dados')
-        .doc(userEmail)
-        .snapshots()
-        .listen((snapshot) {
-      if (snapshot.exists) {
-        Map<String, dynamic> userData = snapshot.data() as Map<String, dynamic>;
-        bool alertStatus = userData['alert'] ?? false;
-        String message = userData['help'] ?? false;
-        // Aqui você pode fazer o que for necessário com o status do alerta
-        if (alertStatus) {
-          NotificationService.alert(context, message);
-          // Execute as ações necessárias quando o alerta estiver ativado
-        } else {
-          print('Alerta desativado.');
-        }
-      } else {
-        print('Documento do usuário não encontrado.');
-      }
-    });
-  }
-
-  Future<void> sendMessage(List<dynamic> emailList, String name, String msm) async {
+  Future<void> sendMessage(
+      List<dynamic> emailList, String name, String msm) async {
     try {
       CollectionReference dadosCollection =
           FirebaseFirestore.instance.collection('dados');
@@ -140,9 +124,87 @@ class ServicesDB {
   saveLocal(double latitude, double longitude) async {
     final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
 
-await userDocRef.update({
-  'latitude': latitude,
-  'longitude': longitude,
-});
+    await userDocRef.update({
+      'latitude': latitude,
+      'longitude': longitude,
+    });
+  }
+
+  //SEMPRE ATIVADAS
+
+  void listenToAlertChanges(context) {
+    FirebaseFirestore.instance
+        .collection('dados')
+        .doc(auth.usuario!.email)
+        .snapshots()
+        .listen((snapshot) {
+      if (snapshot.exists) {
+        Map<String, dynamic> userData = snapshot.data() as Map<String, dynamic>;
+        bool alertStatus = userData['alert'] ?? false;
+        String message = userData['help'] ?? false;
+        //TODO depois que pego o emial, dou um get para pegar a mensagem
+        if (alertStatus) {
+          NotificationService.alert(context, message);
+          // Execute as ações necessárias quando o alerta estiver ativado
+        } else {
+          print('Alerta desativado.');
+        }
+      } else {
+        print('Documento do usuário não encontrado.');
+      }
+    });
+  }
+
+  Future<List<dynamic>> _getEmails() async {
+    try {
+      // Referência ao documento do usuário
+      final userDocRef = FirebaseFirestore.instance
+          .collection('dados')
+          .doc(auth.usuario!.email);
+
+      // Obtendo os dados do documento
+      final userDocSnapshot = await userDocRef.get();
+
+      // Verifique se o documento existe antes de acessar a lista de amigos
+      if (userDocSnapshot.exists) {
+        // Obtenha a lista de amigos do documento
+        List<dynamic> friends = userDocSnapshot.data()!['friends'] ?? [];
+        return friends;
+      } else {
+        // Se o documento não existir, você pode lidar com isso de acordo com sua lógica
+        throw Exception('Documento do usuário não encontrado');
+      }
+    } catch (e) {
+      // Lidar com erros ou exceções aqui, se necessário
+      print('Erro ao buscar a lista de amigos: $e');
+      return [];
+    }
+  }
+
+  void getLocalFriends(context) async {
+    final markers = Provider.of<MarkersEntity>(context, listen: false);
+    Set<Marker> listMarkers = {};
+    List<dynamic> listEmails = [];
+
+    listEmails = await _getEmails();
+
+    for (dynamic email in listEmails) {
+      final DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('dados')
+          .doc(email) // Use o email como ID do documento
+          .get();
+
+      var aux = Marker(
+        markerId: MarkerId(doc['name']),
+        position: LatLng(
+          doc['latitude'] as double,
+          doc['longitude'] as double,
+        ),
+      );
+
+      listMarkers.add(aux);
+    }
+
+    markers.setMarkers(listMarkers);
   }
 }

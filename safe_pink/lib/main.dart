@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_pink/models/makers.dart';
 import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/services/position_service.dart';
@@ -30,7 +31,9 @@ flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
         ChangeNotifierProvider(create: (context) => Usuario()),
-        ChangeNotifierProvider(create: (context) => PositionService())
+        ChangeNotifierProvider(create: (context) => PositionService()),
+        ChangeNotifierProvider(create: (context) => MarkersEntity())
+
       ],
       child: const MyApp(),
     ),
