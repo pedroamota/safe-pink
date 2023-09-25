@@ -236,4 +236,19 @@ class ServicesDB {
 
     markers.setMarkers(listMarkers);
   }
+
+
+  updatePhone(String phone) async{
+    final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
+    await userDocRef.update({
+      'phone': phone,
+    });
+  }
+
+  updateUser(String name) async{
+    final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
+    await userDocRef.update({
+      'name': name,
+    });
+  }
 }

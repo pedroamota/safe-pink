@@ -162,35 +162,6 @@ class _PerfilPageState extends State<PerfilPage> {
             ),
             const SizedBox(height: 20),
 
-            //SEGURANÇA
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-              ),
-              height: size.height * .07,
-              width: size.width * .7,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Icon(
-                    Icons.verified_user_outlined,
-                    color: Color.fromARGB(255, 239, 7, 96),
-                  ),
-                  Text(
-                    'Segurança',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                    ),
-                  ),
-                  SizedBox(),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-
             //TROCAR SENHA
             GestureDetector(
               onTap: () => PasswordWidget().show(context),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/components/components_style.dart';
 import 'package:safe_pink/components/style_form_field.dart';
+import 'package:safe_pink/database/servicesDB.dart';
 import 'package:safe_pink/services/auth_service.dart';
 
 class PhoneWidget {
@@ -10,13 +11,16 @@ class PhoneWidget {
     final size = MediaQuery.of(context).size;
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     String errorSenha = "";
-    TextEditingController password = TextEditingController();
+    TextEditingController phone = TextEditingController();
     //password.text = user.password;
     bool updating = false;
 
-    submit(auth) async {
+    submit(auth, context) async {
       if (formKey.currentState!.validate()) {
         updating = true;
+        final auth = Provider.of<AuthService>(context, listen: false);
+        final db = ServicesDB(auth: auth);
+        db.updatePhone(phone.text);
       }
     }
 
@@ -58,7 +62,7 @@ class PhoneWidget {
                         alignment: Alignment.center,
                         child: TextFormFieldComponent(
                           isRed: true,
-                          controller: password,
+                          controller: phone,
                           label: 'Telefone',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -75,7 +79,7 @@ class PhoneWidget {
                 height: 5,
               ),
               IconButton(
-                onPressed: () => submit(auth),
+                onPressed: () => submit(auth, context),
                 icon: updating
                     ? const CircularProgressIndicator(
                         color: Colors.white,

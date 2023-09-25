@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/components/components_style.dart';
 import 'package:safe_pink/components/style_form_field.dart';
+import 'package:safe_pink/database/servicesDB.dart';
 import 'package:safe_pink/services/auth_service.dart';
 
 class UserWidget {
@@ -13,9 +14,12 @@ class UserWidget {
     TextEditingController user = TextEditingController();
     bool updating = false;
 
-    submit(auth) async {
+    submit(auth, context) async {
       if (formKey.currentState!.validate()) {
         updating = true;
+        final auth = Provider.of<AuthService>(context, listen: false);
+        final db = ServicesDB(auth: auth);
+        db.updateUser(user.text);
       }
     }
 
@@ -74,7 +78,7 @@ class UserWidget {
                 height: 5,
               ),
               IconButton(
-                onPressed: () => submit(auth),
+                onPressed: () => submit(auth, context),
                 icon: updating
                     ? const CircularProgressIndicator(
                         color: Colors.white,
