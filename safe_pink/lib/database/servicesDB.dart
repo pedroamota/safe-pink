@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,7 @@ import 'package:safe_pink/models/makers.dart';
 import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/services/notify_service.dart';
+import 'package:safe_pink/services/notify_user.dart';
 import 'package:safe_pink/services/position_service.dart';
 
 import 'DBFirestore.dart';
@@ -74,27 +76,49 @@ class ServicesDB {
     }
   }
 
-  addFriend(newEmail) async {
-    final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
+  addFriend(newEmail, context) async {
+    try {
+      // Referência ao documento do usuário usando o email como ID
+      final userDocRef =
+          FirebaseFirestore.instance.collection('dados').doc(newEmail);
 
-    DocumentSnapshot userSnapshot = await userDocRef.get();
+      // Verifique se o documento com o email como ID existe
+      final docSnapshot = await userDocRef.get();
 
-    if (userSnapshot.exists) {
-      List<dynamic> currentFriends = userSnapshot.get('friends') ?? [];
+      if (docSnapshot.exists) {
+        final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
 
-      if (!currentFriends.contains(newEmail)) {
-        currentFriends.add(newEmail);
+        DocumentSnapshot userSnapshot = await userDocRef.get();
 
-        await userDocRef.update({
-          'friends': currentFriends,
-        });
+        if (userSnapshot.exists) {
+          List<dynamic> currentFriends = userSnapshot.get('friends') ?? [];
 
-        print('Novo amigo adicionado com sucesso!');
+          if (!currentFriends.contains(newEmail)) {
+            currentFriends.add(newEmail);
+
+            await userDocRef.update({
+              'friends': currentFriends,
+            });
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                backgroundColor: Colors.blue,
+                content: Text('Amigo adicionado'),
+              ),
+            );
+          } else {
+            NotifyUser.showPopUp(context, 'Usuario já está na lista de amigos');
+          }
+        } else {
+          print('Documento do usuário não encontrado.');
+        }
       } else {
-        print('O email do novo amigo já está na lista.');
+        NotifyUser.showPopUp(context, 'Usuario não existe');
       }
-    } else {
-      print('Documento do usuário não encontrado.');
+    } catch (e) {
+      // Lidar com erros ou exceções aqui, se necessário
+      print('Erro ao verificar se o email existe: $e');
+      return false; // Supondo que um erro significa que o email não existe
     }
   }
 

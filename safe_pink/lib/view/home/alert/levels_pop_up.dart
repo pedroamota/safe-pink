@@ -40,7 +40,7 @@ class LevelsPopUp {
                   db.sendMessage(user.friends!, user.name!, 'Nivel 1'),
                   Navigator.of(context).pop(),
                   Navigator.of(context).pop(),
-                  NotifyUser.show(context,'Nivel 1'),
+                  NotifyUser.showScackbar(context,'Nivel 1'),
                 },
                 child: const Text(
                   'Nivel 1',
@@ -57,7 +57,7 @@ class LevelsPopUp {
                   db.sendMessage(user.friends!, user.name!, 'Nivel 2'),
                   Navigator.of(context).pop(),
                   Navigator.of(context).pop(),
-                  NotifyUser.show(context,'Nivel 2'),
+                  NotifyUser.showScackbar(context,'Nivel 2'),
 
                 },
                 child: const Text(
@@ -75,7 +75,7 @@ class LevelsPopUp {
                   db.sendMessage(user.friends!, user.name!,'Nivel 3'),
                   Navigator.of(context).pop(),
                   Navigator.of(context).pop(),
-                  NotifyUser.show(context,'Nivel 3'),
+                  NotifyUser.showScackbar(context,'Nivel 3'),
                 },
                 child: const Text(
                   'Nivel 3',

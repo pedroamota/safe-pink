@@ -22,29 +22,23 @@ class _FriendsPageState extends State<FriendsPage> {
 
   submit(auth) async {
     if (formKey.currentState!.validate()) {
+      FocusNode().unfocus();
       setState(() {
         loading = true;
       });
 
       try {
-        FocusNode().unfocus();
-
+        
         ServicesDB(auth: auth)
             .addFriend(
               friendController.text,
+              context,
             )
             .whenComplete(() => {
                   friendController.clear(),
-                  FocusNode().unfocus(),
                   setState(() {
                     loading = false;
                   }),
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      backgroundColor: Colors.blue,
-                      content: Text('Amigo adicionado'),
-                    ),
-                  ),
                 });
       } on AuthException catch (e) {
         setState(() {
