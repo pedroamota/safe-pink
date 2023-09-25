@@ -19,9 +19,10 @@ class _MapWidgetState extends State<MapWidget> {
     final size = MediaQuery.of(context).size;
     final position = Provider.of<PositionService>(context, listen: false);
     final auth = Provider.of<AuthService>(context, listen: false);
-    
+
     final db = ServicesDB(auth: auth);
     db.saveLocal(position.latitude, position.longitude);
+    db.getLocalFriends(context);
 
     return Container(
       width: size.width * .8,

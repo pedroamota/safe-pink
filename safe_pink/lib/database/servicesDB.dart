@@ -224,6 +224,7 @@ class ServicesDB {
           doc['latitude'] as double,
           doc['longitude'] as double,
         ),
+        infoWindow: InfoWindow(title: doc['name']),
       );
 
       listMarkers.add(aux);
