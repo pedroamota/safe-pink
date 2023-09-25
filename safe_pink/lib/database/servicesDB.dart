@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/models/makers.dart';
@@ -8,7 +7,6 @@ import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/services/notify_service.dart';
 import 'package:safe_pink/services/notify_user.dart';
-import 'package:safe_pink/services/position_service.dart';
 
 import 'DBFirestore.dart';
 
@@ -50,12 +48,14 @@ class ServicesDB {
     }
   }
 
-  void getData(String email, context) async {
+  void getData(context) async {
     final user = Provider.of<Usuario>(context, listen: false);
 
     try {
-      DocumentSnapshot userSnapshot =
-          await FirebaseFirestore.instance.collection('dados').doc(email).get();
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('dados')
+          .doc(auth.usuario!.email)
+          .get();
 
       if (userSnapshot.exists) {
         Map<String, dynamic> userData =
@@ -122,17 +122,18 @@ class ServicesDB {
     }
   }
 
-  Future<void> sendMessage(
-      List<dynamic> emailList, String name, String msm) async {
+  Future<void> sendAlert(context, msm) async {
+    final user = Provider.of<Usuario>(context, listen: false);
+
     try {
       CollectionReference dadosCollection =
           FirebaseFirestore.instance.collection('dados');
 
-      for (String email in emailList) {
+      for (String email in user.friends) {
         DocumentReference userDocRef = dadosCollection.doc(email);
         Map<String, dynamic> updatedData = {
           'alert': true,
-          'help': name,
+          'help': user.name,
           'msm': msm,
         };
         await userDocRef.update(updatedData);
@@ -210,7 +211,7 @@ class ServicesDB {
     Set<Marker> listMarkers = {};
     List<dynamic> listEmails = [];
 
-    listEmails = await _getEmails();
+    listEmails = Provider.of<Usuario>(context, listen: false).friends;
 
     for (dynamic email in listEmails) {
       final DocumentSnapshot doc = await FirebaseFirestore.instance
