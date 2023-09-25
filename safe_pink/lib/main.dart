@@ -9,7 +9,7 @@ import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/services/position_service.dart';
 import 'package:safe_pink/view/login/auth_widget.dart';
-
+import 'package:flutter_background/flutter_background.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -17,14 +17,27 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-    AndroidFlutterLocalNotificationsPlugin>()!.requestPermission();
+      FlutterLocalNotificationsPlugin();
+  flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()!
+      .requestPermission();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  const androidConfig = FlutterBackgroundAndroidConfig(
+    notificationTitle: "flutter_background example app",
+    notificationText:
+        "Background notification for keeping the example app running in the background",
+    notificationImportance: AndroidNotificationImportance.Default,
+    notificationIcon: AndroidResource(
+        name: 'background_icon',
+        defType: 'drawable'), // Default is ic_launcher from folder mipmap
+  );
+  bool success =
+      await FlutterBackground.initialize(androidConfig: androidConfig);
 
   runApp(
     MultiProvider(
@@ -33,7 +46,6 @@ flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
         ChangeNotifierProvider(create: (context) => Usuario()),
         ChangeNotifierProvider(create: (context) => PositionService()),
         ChangeNotifierProvider(create: (context) => MarkersEntity())
-
       ],
       child: const MyApp(),
     ),
