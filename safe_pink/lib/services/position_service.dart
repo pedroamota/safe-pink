@@ -42,4 +42,8 @@ class PositionService extends ChangeNotifier {
       );
     }
   }
+
+  Stream<Position> streamLocal() {
+    return Geolocator.getPositionStream();
+  }
 }

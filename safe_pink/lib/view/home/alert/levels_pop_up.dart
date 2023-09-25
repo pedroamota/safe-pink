@@ -8,6 +8,9 @@ import 'package:safe_pink/services/notify_user.dart';
 
 class LevelsPopUp {
   static show(context) {
+    String nivel1 = 'Acompanhe minha localização!';
+    String nivel2 = 'Estou sentindo que alguem está me seguindo!';
+    String nivel3 = 'Preciso de ajuda agora!';
     final auth = Provider.of<AuthService>(context, listen: false);
     final user = Provider.of<Usuario>(context, listen: false);
     final db = ServicesDB(auth: auth);
@@ -32,52 +35,52 @@ class LevelsPopUp {
             children: [
               Container(
                 color: const Color.fromARGB(255, 239, 7, 96),
-                width: MediaQuery.of(context).size.height * .4,
+                width: MediaQuery.of(context).size.height * .5,
                 height: 5,
               ),
               TextButton(
                 onPressed: () => {
-                  db.sendAlert(context, 'Nivel 1'),
+                  db.sendAlert(context, nivel1),
                   Navigator.of(context).pop(),
                   Navigator.of(context).pop(),
-                  NotifyUser.showScackbar(context, 'Nivel 1'),
+                  NotifyUser.showScackbar(context, nivel1),
                 },
-                child: const Text(
-                  'Nivel 1',
+                child: Text(
+                  nivel1,
                   style: ComponentsStyle.text,
                 ),
               ),
               Container(
                 color: const Color.fromARGB(255, 239, 7, 96),
-                width: MediaQuery.of(context).size.height * .4,
+                width: MediaQuery.of(context).size.height * .5,
                 height: 5,
               ),
               TextButton(
                 onPressed: () => {
-                  db.sendAlert(context, 'Nivel 2'),
+                  db.sendAlert(context, nivel2),
                   Navigator.of(context).pop(),
                   Navigator.of(context).pop(),
-                  NotifyUser.showScackbar(context, 'Nivel 2'),
+                  NotifyUser.showScackbar(context, nivel2),
                 },
-                child: const Text(
-                  'Nivel 2',
+                child: Text(
+                  nivel2,
                   style: ComponentsStyle.text,
                 ),
               ),
               Container(
                 color: const Color.fromARGB(255, 239, 7, 96),
-                width: MediaQuery.of(context).size.height * .4,
+                width: MediaQuery.of(context).size.height * .5,
                 height: 5,
               ),
               TextButton(
                 onPressed: () => {
-                  db.sendAlert(context, 'Nivel 3'),
+                  db.sendAlert(context, nivel3),
                   Navigator.of(context).pop(),
                   Navigator.of(context).pop(),
-                  NotifyUser.showScackbar(context, 'Nivel 3'),
+                  NotifyUser.showScackbar(context, nivel3),
                 },
-                child: const Text(
-                  'Nivel 3',
+                child: Text(
+                  nivel3,
                   style: ComponentsStyle.text,
                 ),
               ),

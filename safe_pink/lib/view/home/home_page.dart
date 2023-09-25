@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/database/servicesDB.dart';
 import 'package:safe_pink/models/user.dart';
@@ -20,6 +23,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late Timer _timer;
   getData() async {
     final auth = Provider.of<AuthService>(context, listen: false);
     final db = ServicesDB(auth: auth);
@@ -41,7 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
     final auth = Provider.of<AuthService>(context, listen: false);
     final position = Provider.of<PositionService>(context, listen: false);
     final db = ServicesDB(auth: auth);
-    db.saveLocal(position.latitude, position.longitude);
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+      db.saveLocal(position.latitude, position.longitude);
+    });
     db.getLocalFriends(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 239, 7, 96),
