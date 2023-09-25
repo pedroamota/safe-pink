@@ -68,6 +68,8 @@ class ServicesDB {
         user.help = userData['help'];
         user.latitude = userData['latitude'];
         user.longitude = userData['longitude'];
+
+        getLocalFriends(context);
       } else {
         print('Documento do usuário não encontrado.');
       }
@@ -157,7 +159,7 @@ class ServicesDB {
 
   //SEMPRE ATIVADAS
 
-  void listenToAlertChanges(context) {
+  void listenToAlert(context) {
     FirebaseFirestore.instance
         .collection('dados')
         .doc(auth.usuario!.email)
@@ -166,11 +168,11 @@ class ServicesDB {
       if (snapshot.exists) {
         Map<String, dynamic> userData = snapshot.data() as Map<String, dynamic>;
         bool alertStatus = userData['alert'] ?? false;
-        String message = userData['help'] ?? false;
-        //TODO depois que pego o emial, dou um get para pegar a mensagem
+        String msm = userData['msm'] ?? false;
+        String name = userData['help'] ?? false;
         if (alertStatus) {
-          NotificationService.alert(context, message);
-          // Execute as ações necessárias quando o alerta estiver ativado
+          NotificationService().alert(msm, name);
+          NotifyUser.showPopUp(context, '$name precisa de ajuda! $msm');
         } else {
           print('Alerta desativado.');
         }
@@ -179,8 +181,8 @@ class ServicesDB {
       }
     });
   }
-
-  Future<List<dynamic>> _getEmails() async {
+  //Usar em caso de erro
+    Future<List<dynamic>> _getEmails() async {
     try {
       // Referência ao documento do usuário
       final userDocRef = FirebaseFirestore.instance
@@ -205,6 +207,7 @@ class ServicesDB {
       return [];
     }
   }
+
 
   void getLocalFriends(context) async {
     final markers = Provider.of<MarkersEntity>(context, listen: false);

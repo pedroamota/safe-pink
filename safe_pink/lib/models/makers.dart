@@ -6,6 +6,5 @@ class MarkersEntity extends ChangeNotifier {
 
   setMarkers(Set<Marker> newList) {
     markers = newList;
-    notifyListeners();
   }
 }

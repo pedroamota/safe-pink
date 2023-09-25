@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final db = ServicesDB(auth: auth);
     Provider.of<PositionService>(context, listen: false).getPosition();
     db.getData(context);
-    db.listenToAlertChanges(context);
+    db.listenToAlert(context);
     db.getLocalFriends(context);
   }
 
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final position = Provider.of<PositionService>(context, listen: false);
     final db = ServicesDB(auth: auth);
     db.saveLocal(position.latitude, position.longitude);
-
+    db.getLocalFriends(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 239, 7, 96),
 
