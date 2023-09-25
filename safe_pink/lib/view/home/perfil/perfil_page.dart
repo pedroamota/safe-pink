@@ -78,7 +78,7 @@ class _PerfilPageState extends State<PerfilPage> {
                       width: size.width * .56,
                       padding: EdgeInsets.zero,
                       child: Text(
-                        '${user.name}',
+                        '${user.username}',
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,

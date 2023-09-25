@@ -30,7 +30,6 @@ class TextFormFieldComponent extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide.none,
         ),
         labelText: label,
         floatingLabelBehavior: FloatingLabelBehavior.never,

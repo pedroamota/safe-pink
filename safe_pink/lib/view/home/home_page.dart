@@ -1,11 +1,7 @@
 import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/database/servicesDB.dart';
-import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/services/position_service.dart';
 import 'package:safe_pink/view/home/alert/alert_pop_up.dart';
@@ -13,6 +9,7 @@ import 'package:safe_pink/view/home/friends/friends_page.dart';
 import 'package:safe_pink/view/home/info/info_page.dart';
 import 'package:safe_pink/view/home/local/local_page.dart';
 import 'package:safe_pink/view/home/perfil/perfil_page.dart';
+
 import '../../components/components_style.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -45,8 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
     final auth = Provider.of<AuthService>(context, listen: false);
     final position = Provider.of<PositionService>(context, listen: false);
     final db = ServicesDB(auth: auth);
-    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+    Timer.periodic(const Duration(minutes: 1), (timer) {
       db.saveLocal(position.latitude, position.longitude);
+      db.sendAlert(context, '', false);
     });
     db.getLocalFriends(context);
     return Scaffold(

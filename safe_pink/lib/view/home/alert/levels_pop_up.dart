@@ -40,7 +40,7 @@ class LevelsPopUp {
               ),
               TextButton(
                 onPressed: () => {
-                  db.sendAlert(context, nivel1),
+                  db.sendAlert(context, nivel1, true),
                   Navigator.of(context).pop(),
                   Navigator.of(context).pop(),
                   NotifyUser.showScackbar(context, nivel1),
@@ -57,7 +57,11 @@ class LevelsPopUp {
               ),
               TextButton(
                 onPressed: () => {
-                  db.sendAlert(context, nivel2),
+                  db.sendAlert(context, nivel2, true).whenComplete(() {
+                    Future.delayed(const Duration(minutes: 5), () {
+                      db.sendAlert(context, '', false);
+                    });
+                  }),
                   Navigator.of(context).pop(),
                   Navigator.of(context).pop(),
                   NotifyUser.showScackbar(context, nivel2),
@@ -74,7 +78,11 @@ class LevelsPopUp {
               ),
               TextButton(
                 onPressed: () => {
-                  db.sendAlert(context, nivel3),
+                  db.sendAlert(context, nivel3, true).whenComplete(() {
+                    Future.delayed(const Duration(minutes: 5), () {
+                      db.sendAlert(context, '', false);
+                    });
+                  }),
                   Navigator.of(context).pop(),
                   Navigator.of(context).pop(),
                   NotifyUser.showScackbar(context, nivel3),

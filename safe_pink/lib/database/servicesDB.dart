@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -79,7 +81,7 @@ class ServicesDB {
   }
 
   addFriend(newEmail, context) async {
-    try {
+
       // Referência ao documento do usuário usando o email como ID
       final userDocRef =
           FirebaseFirestore.instance.collection('dados').doc(newEmail);
@@ -101,7 +103,7 @@ class ServicesDB {
             await userDocRef.update({
               'friends': currentFriends,
             });
-
+            Navigator.pop(context);
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 backgroundColor: Colors.blue,
@@ -117,14 +119,9 @@ class ServicesDB {
       } else {
         NotifyUser.showPopUp(context, 'Usuario não existe');
       }
-    } catch (e) {
-      // Lidar com erros ou exceções aqui, se necessário
-      print('Erro ao verificar se o email existe: $e');
-      return false; // Supondo que um erro significa que o email não existe
-    }
   }
 
-  Future<void> sendAlert(context, msm) async {
+  Future<void> sendAlert(context, String msm, bool alert) async {
     final user = Provider.of<Usuario>(context, listen: false);
 
     try {
@@ -134,7 +131,7 @@ class ServicesDB {
       for (String email in user.friends) {
         DocumentReference userDocRef = dadosCollection.doc(email);
         Map<String, dynamic> updatedData = {
-          'alert': true,
+          'alert': alert,
           'help': user.name,
           'msm': msm,
         };
@@ -248,7 +245,7 @@ class ServicesDB {
   updateUser(String name) async{
     final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
     await userDocRef.update({
-      'name': name,
+      'username': name,
     });
   }
 }

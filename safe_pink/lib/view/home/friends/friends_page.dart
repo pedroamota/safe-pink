@@ -1,11 +1,14 @@
 import 'dart:core';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safe_pink/components/components_style.dart';
 import 'package:safe_pink/components/style_form_field.dart';
 import 'package:safe_pink/database/servicesDB.dart';
 import 'package:safe_pink/services/auth_service.dart';
 
+import 'add_friends.dart';
 import 'list_friends.dart';
 
 class FriendsPage extends StatefulWidget {
@@ -16,49 +19,8 @@ class FriendsPage extends StatefulWidget {
 }
 
 class _FriendsPageState extends State<FriendsPage> {
-  final friendController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  bool loading = false;
-
-  submit(auth) async {
-    if (formKey.currentState!.validate()) {
-      FocusNode().unfocus();
-      setState(() {
-        loading = true;
-      });
-
-      try {
-        
-        ServicesDB(auth: auth)
-            .addFriend(
-              friendController.text,
-              context,
-            )
-            .whenComplete(() => {
-                  friendController.clear(),
-                  setState(() {
-                    loading = false;
-                  }),
-                });
-      } on AuthException catch (e) {
-        setState(() {
-          loading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.purple,
-            content: Text(e.message),
-          ),
-        );
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    friendController.dispose();
-    super.dispose();
-  }
+  TextEditingController email = TextEditingController();
+  String searchTerm = '';
 
   @override
   Widget build(BuildContext context) {
@@ -107,40 +69,100 @@ class _FriendsPageState extends State<FriendsPage> {
                   width: size.width * .7,
                   child: Column(
                     children: [
-                      Form(
-                        key: formKey,
-                        child: SizedBox(
-                          height: size.height * .15,
-                          child: TextFormFieldComponent(
-                            controller: friendController,
-                            label: 'Adicione um amigo',
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Digite seu email';
-                              } else if (!EmailValidator.validate(value)) {
-                                return 'Digite um email valido';
-                              }
-                              return null;
-                            },
+                      SizedBox(
+                        height: size.height * .15,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Digite o nome do amigo',
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: Colors.black54,
+                            ),
+                            filled: true,
+                            isDense: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
+                          onChanged: (value) {
+                            setState(() {
+                              searchTerm = value.toLowerCase();
+                            });
+                          },
                         ),
                       ),
-                      FriendListScreen(
-                        userEmail: auth.usuario!.email!,
-                      )
+                      SizedBox(
+                        width: double.maxFinite,
+                        height: size.height * .6,
+                        child: StreamBuilder<DocumentSnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('dados')
+                              .doc(auth.usuario!.email!)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Container();
+                            } else {
+                              Map<String, dynamic> userData =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+                              List<dynamic> friendList =
+                                  userData['friends'] ?? [];
+                              return ListView.builder(
+                                itemCount: friendList.length,
+                                itemBuilder: (context, index) {
+                                  final friend = friendList.elementAt(index);
+                                  if (searchTerm.isNotEmpty &&
+                                      !friend
+                                          .toLowerCase()
+                                          .contains(searchTerm)) {
+                                    return Container(); // Oculta amigos que não correspondem à pesquisa
+                                  }
+                                  return Container(
+                                    margin: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Colors.white,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Icon(Icons.person_outlined),
+                                        SizedBox(
+                                          width: size.width * .5,
+                                          child: Text(
+                                            friend,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              overflow: TextOverflow.ellipsis,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 IconButton(
-                  onPressed: () => submit(auth),
-                  icon: loading
-                      ? const CircularProgressIndicator(
-                          color: Colors.white,
-                        )
-                      : const Icon(
-                          Icons.person_add_rounded,
-                          size: 40,
-                        ),
+                  onPressed: () => AddFriend().show(context),
+                  icon: const Icon(
+                    Icons.person_add_rounded,
+                    size: 40,
+                  ),
                 )
               ],
             )

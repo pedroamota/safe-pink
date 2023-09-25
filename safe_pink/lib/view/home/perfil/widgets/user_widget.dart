@@ -34,7 +34,7 @@ class UserWidget {
             ),
           ),
           title: const Text(
-            'Alterar Nome',
+            'Alterar Username',
             style: ComponentsStyle.text,
             textAlign: TextAlign.center,
           ),
@@ -62,10 +62,10 @@ class UserWidget {
                         child: TextFormFieldComponent(
                           isRed: true,
                           controller: user,
-                          label: 'Nome',
+                          label: 'Username',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Digite seu nome';
+                              return 'Digite seu username';
                             }
                             return null;
                           },

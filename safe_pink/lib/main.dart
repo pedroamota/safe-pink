@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background/flutter_background.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/models/makers.dart';
@@ -9,7 +9,7 @@ import 'package:safe_pink/models/user.dart';
 import 'package:safe_pink/services/auth_service.dart';
 import 'package:safe_pink/services/position_service.dart';
 import 'package:safe_pink/view/login/auth_widget.dart';
-import 'package:flutter_background/flutter_background.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
@@ -38,6 +38,10 @@ void main() async {
   );
   bool success =
       await FlutterBackground.initialize(androidConfig: androidConfig);
+
+  if (success) {
+    FlutterBackground.enableBackgroundExecution();
+  }
 
   runApp(
     MultiProvider(
