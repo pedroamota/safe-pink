@@ -28,19 +28,19 @@ void main() async {
   );
 
   const androidConfig = FlutterBackgroundAndroidConfig(
-    notificationTitle: "flutter_background example app",
-    notificationText:
-        "Background notification for keeping the example app running in the background",
-    notificationImportance: AndroidNotificationImportance.Default,
+    notificationTitle: "Safe Pink",
+    notificationText: "Monitorando sua localização",
+    notificationImportance: AndroidNotificationImportance.Max,
     notificationIcon: AndroidResource(
-        name: 'background_icon',
-        defType: 'drawable'), // Default is ic_launcher from folder mipmap
+      name: 'launcher_icon',
+      defType: 'mipmap',
+    ), // Default is ic_launcher from folder mipmap
   );
   bool success =
       await FlutterBackground.initialize(androidConfig: androidConfig);
 
   if (success) {
-    FlutterBackground.enableBackgroundExecution();
+    await FlutterBackground.enableBackgroundExecution();
   }
 
   runApp(

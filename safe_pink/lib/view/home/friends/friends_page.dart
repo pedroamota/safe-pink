@@ -83,9 +83,11 @@ class _FriendsPageState extends State<FriendsPage> {
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(color: Colors.transparent),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(color: Colors.transparent),
                             ),
                           ),
                           onChanged: (value) {

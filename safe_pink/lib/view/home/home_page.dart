@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_background/flutter_background.dart';
 import 'package:provider/provider.dart';
 import 'package:safe_pink/database/servicesDB.dart';
 import 'package:safe_pink/services/auth_service.dart';
@@ -28,6 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
     db.getData(context);
     db.listenToAlert(context);
     db.getLocalFriends(context);
+    await FlutterBackground.enableBackgroundExecution();
   }
 
   @override
