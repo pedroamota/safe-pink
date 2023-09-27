@@ -44,40 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDnJBABKw5D1vJXvSBbnGynYQQAOqXD0XQ',
-    appId: '1:263809878415:web:81e2a54b57497cabf463fa',
-    messagingSenderId: '263809878415',
-    projectId: 'safe-pink',
-    authDomain: 'safe-pink.firebaseapp.com',
-    storageBucket: 'safe-pink.appspot.com',
-    measurementId: 'G-98MP1ZQJTY',
+    apiKey: 'AIzaSyB0M2TBvAccaF5QDV3o_nO5EvsA-Gwxp9g',
+    appId: '1:121498991170:web:28d8b95ba1ddd929064bdb',
+    messagingSenderId: '121498991170',
+    projectId: 'safe-pink-9a8e2',
+    authDomain: 'safe-pink-9a8e2.firebaseapp.com',
+    storageBucket: 'safe-pink-9a8e2.appspot.com',
+    measurementId: 'G-S9PH6525PD',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBOBS_r0XHQniruhobucZqpN_kA5z72s6E',
-    appId: '1:263809878415:android:2fe8cdf9d5fb0758f463fa',
-    messagingSenderId: '263809878415',
-    projectId: 'safe-pink',
-    storageBucket: 'safe-pink.appspot.com',
+    apiKey: 'AIzaSyBYDrBeH9hBZOgUMbuyV2SWYp2XWye_o-g',
+    appId: '1:121498991170:android:aa71e8aa8b8cb38c064bdb',
+    messagingSenderId: '121498991170',
+    projectId: 'safe-pink-9a8e2',
+    storageBucket: 'safe-pink-9a8e2.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAZhdkSIPXdMExgzl8F53nXz3oTt_6If5A',
-    appId: '1:263809878415:ios:3286b830d10c182ff463fa',
-    messagingSenderId: '263809878415',
-    projectId: 'safe-pink',
-    storageBucket: 'safe-pink.appspot.com',
-    iosClientId: '263809878415-9psvcjpvnsebv26j7legfgq33b36ru0s.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDHdZgtVEcOoJvsn6OpSDOZDK5uKWEXEhc',
+    appId: '1:121498991170:ios:84fd2625c209a125064bdb',
+    messagingSenderId: '121498991170',
+    projectId: 'safe-pink-9a8e2',
+    storageBucket: 'safe-pink-9a8e2.appspot.com',
     iosBundleId: 'com.example.safePink',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAZhdkSIPXdMExgzl8F53nXz3oTt_6If5A',
-    appId: '1:263809878415:ios:3286b830d10c182ff463fa',
-    messagingSenderId: '263809878415',
-    projectId: 'safe-pink',
-    storageBucket: 'safe-pink.appspot.com',
-    iosClientId: '263809878415-9psvcjpvnsebv26j7legfgq33b36ru0s.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDHdZgtVEcOoJvsn6OpSDOZDK5uKWEXEhc',
+    appId: '1:121498991170:ios:84fd2625c209a125064bdb',
+    messagingSenderId: '121498991170',
+    projectId: 'safe-pink-9a8e2',
+    storageBucket: 'safe-pink-9a8e2.appspot.com',
     iosBundleId: 'com.example.safePink',
   );
 }
