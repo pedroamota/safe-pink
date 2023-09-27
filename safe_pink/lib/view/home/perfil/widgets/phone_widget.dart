@@ -13,14 +13,12 @@ class PhoneWidget {
     String errorSenha = "";
     TextEditingController phone = TextEditingController();
     //password.text = user.password;
-    bool updating = false;
 
     submit(auth, context) async {
       if (formKey.currentState!.validate()) {
-        updating = true;
         final auth = Provider.of<AuthService>(context, listen: false);
         final db = ServicesDB(auth: auth);
-        db.updatePhone(phone.text);
+        db.updatePhone(phone.text, context);
       }
     }
 
@@ -47,32 +45,25 @@ class PhoneWidget {
                 width: MediaQuery.of(context).size.height * .5,
                 height: 5,
               ),
-              updating
-                  ? const SizedBox(
-                      height: 27.0,
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : Form(
-                      key: formKey,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        height: size.height * .15,
-                        alignment: Alignment.center,
-                        child: TextFormFieldComponent(
-                          isRed: true,
-                          controller: phone,
-                          label: 'Telefone',
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Digite seu telefone';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
+              Form(
+                key: formKey,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  height: size.height * .15,
+                  alignment: Alignment.center,
+                  child: TextFormFieldComponent(
+                    isRed: true,
+                    controller: phone,
+                    label: 'Telefone',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Digite seu telefone';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ),
               Container(
                 color: const Color.fromARGB(255, 239, 7, 96),
                 width: MediaQuery.of(context).size.height * .5,
@@ -80,15 +71,11 @@ class PhoneWidget {
               ),
               IconButton(
                 onPressed: () => submit(auth, context),
-                icon: updating
-                    ? const CircularProgressIndicator(
-                        color: Colors.white,
-                      )
-                    : const Icon(
-                        Icons.check,
-                        size: 40,
-                        color: Color.fromARGB(255, 239, 7, 96),
-                      ),
+                icon: const Icon(
+                  Icons.check,
+                  size: 40,
+                  color: Color.fromARGB(255, 239, 7, 96),
+                ),
               ),
               const SizedBox(height: 10),
             ],

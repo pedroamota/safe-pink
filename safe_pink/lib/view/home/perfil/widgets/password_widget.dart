@@ -16,7 +16,11 @@ class PasswordWidget {
     submit(AuthService auth) async {
       if (formKey.currentState!.validate()) {
         auth.updating = true;
-        auth.updatePassword(newPassword.text, password.text);
+        auth.updatePassword(
+          newPassword.text,
+          password.text,
+          context,
+        );
       }
     }
 

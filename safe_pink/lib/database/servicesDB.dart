@@ -81,44 +81,43 @@ class ServicesDB {
   }
 
   addFriend(newEmail, context) async {
+    // Referência ao documento do usuário usando o email como ID
+    final userDocRef =
+        FirebaseFirestore.instance.collection('dados').doc(newEmail);
 
-      // Referência ao documento do usuário usando o email como ID
-      final userDocRef =
-          FirebaseFirestore.instance.collection('dados').doc(newEmail);
+    // Verifique se o documento com o email como ID existe
+    final docSnapshot = await userDocRef.get();
 
-      // Verifique se o documento com o email como ID existe
-      final docSnapshot = await userDocRef.get();
+    if (docSnapshot.exists) {
+      final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
 
-      if (docSnapshot.exists) {
-        final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
+      DocumentSnapshot userSnapshot = await userDocRef.get();
 
-        DocumentSnapshot userSnapshot = await userDocRef.get();
+      if (userSnapshot.exists) {
+        List<dynamic> currentFriends = userSnapshot.get('friends') ?? [];
 
-        if (userSnapshot.exists) {
-          List<dynamic> currentFriends = userSnapshot.get('friends') ?? [];
+        if (!currentFriends.contains(newEmail)) {
+          currentFriends.add(newEmail);
 
-          if (!currentFriends.contains(newEmail)) {
-            currentFriends.add(newEmail);
-
-            await userDocRef.update({
-              'friends': currentFriends,
-            });
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                backgroundColor: Colors.blue,
-                content: Text('Amigo adicionado'),
-              ),
-            );
-          } else {
-            NotifyUser.showPopUp(context, 'Usuario já está na lista de amigos');
-          }
+          await userDocRef.update({
+            'friends': currentFriends,
+          });
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.blue,
+              content: Text('Amigo adicionado'),
+            ),
+          );
         } else {
-          print('Documento do usuário não encontrado.');
+          NotifyUser.showPopUp(context, 'Usuario já está na lista de amigos');
         }
       } else {
-        NotifyUser.showPopUp(context, 'Usuario não existe');
+        print('Documento do usuário não encontrado.');
       }
+    } else {
+      NotifyUser.showPopUp(context, 'Usuario não existe');
+    }
   }
 
   Future<void> sendAlert(context, String msm, bool alert) async {
@@ -178,8 +177,9 @@ class ServicesDB {
       }
     });
   }
+
   //Usar em caso de erro
-    Future<List<dynamic>> _getEmails() async {
+  Future<List<dynamic>> _getEmails() async {
     try {
       // Referência ao documento do usuário
       final userDocRef = FirebaseFirestore.instance
@@ -204,7 +204,6 @@ class ServicesDB {
       return [];
     }
   }
-
 
   void getLocalFriends(context) async {
     final markers = Provider.of<MarkersEntity>(context, listen: false);
@@ -234,18 +233,29 @@ class ServicesDB {
     markers.setMarkers(listMarkers);
   }
 
-
-  updatePhone(String phone) async{
-    final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
-    await userDocRef.update({
-      'phone': phone,
-    });
+  updatePhone(String phone, context) async {
+    try {
+      final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
+      await userDocRef.update({
+        'phone': phone,
+      }).whenComplete(
+          () => NotifyUser.showScackbar(context, 'Atualizado com sucesso'));
+      getData(context);
+    } catch (e) {
+      NotifyUser.showScackbar(context, 'Erro na atualização');
+    }
   }
 
-  updateUser(String name) async{
-    final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
-    await userDocRef.update({
-      'username': name,
-    });
+  updateUser(String name, context) async {
+    try {
+      final userDocRef = db.collection('dados').doc('${auth.usuario!.email}');
+      await userDocRef.update({
+        'username': name,
+      }).whenComplete(
+          () => NotifyUser.showScackbar(context, 'Atualizado com sucesso'));
+      getData(context);
+    } catch (e) {
+      NotifyUser.showScackbar(context, 'Erro na atualização');
+    }
   }
 }

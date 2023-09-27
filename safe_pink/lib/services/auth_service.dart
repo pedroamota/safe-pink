@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:safe_pink/database/servicesDB.dart';
+import 'package:safe_pink/services/notify_user.dart';
 
 class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -67,19 +70,52 @@ class AuthService extends ChangeNotifier {
     }
   }
 
+  Future<void> recover(String email, context) async {
+    await _auth
+        .sendPasswordResetEmail(email: email)
+        .then((value) => {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.green,
+                content: const Text('Email enviado para resetar senha'),
+                duration: const Duration(seconds: 5),
+                action: SnackBarAction(
+                  label: 'DISMISS',
+                  textColor: Colors.white,
+                  onPressed: () {},
+                ),
+              )),
+            })
+        .catchError((onError) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.purple,
+        content: const Text('Erro ao enviar codigo de recuperação'),
+        duration: const Duration(seconds: 5),
+        action: SnackBarAction(
+          label: 'DISMISS',
+          textColor: Colors.white,
+          onPressed: () {},
+        ),
+      ));
+    });
+  }
+
   logOut() async {
     await _auth.signOut();
     isLoading = true;
     _getUser();
   }
 
-  updateEmail(String newEmail, String password) async {
+  updateEmail(String newEmail, String password, context) async {
     try {
+      final auth = Provider.of<AuthService>(context, listen: false);
+      final db = ServicesDB(auth: auth);
       await _auth.signInWithEmailAndPassword(
         email: usuario!.email!,
         password: password,
       );
-      await _auth.currentUser!.updateEmail(newEmail);
+      db.getData(context);
+      await _auth.currentUser!.updateEmail(newEmail).whenComplete(
+          () => NotifyUser.showScackbar(context, 'Atualizado com sucesso'));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
         throw AuthException(message: 'Antes faça login novamente');
@@ -87,13 +123,17 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  updatePassword(String newPassword, String password) async {
+  updatePassword(String newPassword, String password, context) async {
     try {
+      final auth = Provider.of<AuthService>(context, listen: false);
+      final db = ServicesDB(auth: auth);
       await _auth.signInWithEmailAndPassword(
         email: usuario!.email!,
         password: password,
       );
-      await _auth.currentUser!.updatePassword(newPassword);
+      await _auth.currentUser!.updatePassword(newPassword).whenComplete(
+          () => NotifyUser.showScackbar(context, 'Atualizado com sucesso'));
+      db.getData(context);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
         throw AuthException(message: 'Antes faça login novamente');

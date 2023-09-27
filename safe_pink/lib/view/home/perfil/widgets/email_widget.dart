@@ -20,7 +20,11 @@ class EmailWidget {
     submit(AuthService auth) async {
       if (formKey.currentState!.validate()) {
         updating = true;
-        auth.updateEmail(email.text, password.text);
+        auth.updateEmail(
+          email.text,
+          password.text,
+          context,
+        );
       }
     }
 
